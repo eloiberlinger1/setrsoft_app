@@ -1,6 +1,7 @@
-# SetterSoft
+# SetRsoft
 
-Monorepo: **Django** API (`backend/`), **React + Vite** app (`frontend/`), **PostgreSQL**.
+[![CI Status](https://github.com/setrsoft/setrsoft_app/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/setrsoft/setrsoft_app/actions/workflows/ci.yml)
+[![Discord](https://img.shields.io/badge/Discord-Join-7289da?logo=discord&logoColor=white)](https://discord.gg/BdyfNU9TpR)
 
 ## Environment variables
 
