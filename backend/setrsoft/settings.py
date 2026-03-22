@@ -8,16 +8,21 @@ from pathlib import Path
 
 import dotenv
 
-# Load .env from backend directory (when running from repo root or backend/)
+# Load .env from repository root (single source of truth; see root .env.example).
 BASE_DIR = Path(__file__).resolve().parent.parent
-env_path = BASE_DIR / '.env'
-dotenv.load_dotenv(env_path)
+REPO_ROOT = BASE_DIR.parent
+dotenv.load_dotenv(REPO_ROOT / '.env')
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-change-me')
 DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1', 'yes')
 ALLOWED_HOSTS = [
     h.strip() for h in os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',') if h.strip()
 ]
+
+_TRUST_PROXY = os.environ.get('TRUST_PROXY', '').lower() in ('1', 'true', 'yes')
+if _TRUST_PROXY:
+    USE_X_FORWARDED_HOST = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -32,6 +37,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -87,6 +93,14 @@ TIME_ZONE = 'UTC'
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    },
+}
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {

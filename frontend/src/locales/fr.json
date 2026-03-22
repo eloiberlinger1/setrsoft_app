@@ -1,0 +1,32 @@
+{
+  "translation": {
+    "nav": {
+      "home": "Accueil",
+      "gym": "Salle",
+      "editor": "Éditeur",
+      "language": "Langue"
+    },
+    "hero": {
+      "subtitle": "Nous mettons la technologie au service de l'escalade",
+      "test_editor": "Tester l'éditeur",
+      "holds_database": "Base de données mondiale de prises d'escalade",
+      "stock_management": "Gestion de stock pour l'ouverture"
+    },
+    "split": {
+      "dev_title": "Rejoignez le projet et contribuez",
+      "dev_desc": "Écosystème open source pour la technologie de l'escalade indoor.",
+      "dev_btn": "Voir sur GitHub",
+      "setter_title": "Ouvreurs",
+      "setter_desc": "Testez le logiciel et façonnez l'avenir de l'ouverture.",
+      "setter_btn": "Tester l'application"
+    },
+    "footer": {
+      "org": "Organisation SetRsoft",
+      "docs": "Documentation",
+      "about": "Nous",
+      "partners": "Partenaires",
+      "contact": "Contact",
+      "rights": "© 2024-2026 SetRsoft. Tous droits réservés."
+    }
+  }
+}

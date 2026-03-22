@@ -1,0 +1,32 @@
+{
+  "translation": {
+    "nav": {
+      "home": "Startseite",
+      "gym": "Halle",
+      "editor": "Editor",
+      "language": "Sprache"
+    },
+    "hero": {
+      "subtitle": "Wir bringen Technologie in den Klettersport",
+      "test_editor": "Editor testen",
+      "holds_database": "Weltweite Klettergriff-Datenbank",
+      "stock_management": "Bestandsverwaltung für den Routenbau"
+    },
+    "split": {
+      "dev_title": "Schließ dich dem Projekt an und trage bei",
+      "dev_desc": "Open-Source-Ökosystem für Indoor-Klettertechnologie.",
+      "dev_btn": "Auf GitHub ansehen",
+      "setter_title": "Routenbauer",
+      "setter_desc": "Teste die Software und gestalte die Zukunft des Routenbaus.",
+      "setter_btn": "App testen"
+    },
+    "footer": {
+      "org": "SetRsoft Organisation",
+      "docs": "Dokumentation",
+      "about": "Über uns",
+      "partners": "Partner",
+      "contact": "Kontakt",
+      "rights": "© 2024-2026 SetRsoft. Alle Rechte vorbehalten."
+    }
+  }
+}

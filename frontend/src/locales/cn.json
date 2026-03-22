@@ -1,0 +1,32 @@
+{
+  "translation": {
+    "nav": {
+      "home": "主页",
+      "gym": "攀岩馆",
+      "editor": "编辑器",
+      "language": "语言"
+    },
+    "hero": {
+      "subtitle": "我们将技术服务于攀岩行业",
+      "test_editor": "测试编辑器",
+      "holds_database": "全球攀岩支点数据库",
+      "stock_management": "定线库存管理"
+    },
+    "split": {
+      "dev_title": "加入项目并做出贡献",
+      "dev_desc": "室内攀岩技术的开源生态系统.",
+      "dev_btn": "在GitHub上查看",
+      "setter_title": "定线员",
+      "setter_desc": "测试软件并塑造定线的未来.",
+      "setter_btn": "测试应用"
+    },
+    "footer": {
+      "org": "SetRsoft 组织",
+      "docs": "文档",
+      "about": "关于我们",
+      "partners": "合作伙伴",
+      "contact": "联系方式",
+      "rights": "© 2024-2026 SetRsoft. 保留所有权利."
+    }
+  }
+}
