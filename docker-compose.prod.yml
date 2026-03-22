@@ -1,5 +1,10 @@
-# Production stack: Gunicorn (Dockerfile CMD), no source bind mounts.
-# Usage: docker compose -f docker-compose.prod.yml up -d --build
+# Production stack: Nginx (web) serves the Vite build and proxies /api/ and /admin/ to Gunicorn.
+# Backend is not published on the host; only port 80 (web) is exposed.
+#
+# Usage: POSTGRES_PASSWORD=... SECRET_KEY=... docker compose -f docker-compose.prod.yml up -d --build
+#
+# Smoke checks (with stack up): curl -sSf http://localhost/
+#   curl -sSf http://localhost/api/health/   curl -sSf http://localhost/editor/ | head
 services:
   db:
     image: postgres:16-alpine
@@ -19,8 +24,6 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
     environment:
       POSTGRES_HOST: db
       POSTGRES_PORT: "5432"
@@ -30,9 +33,19 @@ services:
       SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY in .env or the environment}
       DEBUG: ${DEBUG:-False}
       ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1}
+      TRUST_PROXY: ${TRUST_PROXY:-1}
     depends_on:
       db:
         condition: service_healthy
+
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
 
 volumes:
   postgres_data_prod:
