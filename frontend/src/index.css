@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+@theme {
+  --color-background: #131313;
+  --color-surface-lowest: #0E0E0E;
+  --color-surface-low: #1C1B1B;
+  --color-surface: #131313;
+  --color-surface-high: #2A2A2A;
+
+  --color-mint: #00FFAB;
+  --color-mint-dim: #00E297;
+  
+  --color-on-background: #E5E2E1;
+  --color-on-surface: #E5E2E1;
+  --color-on-surface-variant: #B9CBBE;
+  --color-ghost-border: #3A4A40;
+
+  --font-inter: "Inter", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-on-background font-inter antialiased;
+  }
+}
