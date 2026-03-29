@@ -20,6 +20,19 @@
       "setter_desc": "Teste die Software und gestalte die Zukunft des Routenbaus.",
       "setter_btn": "App testen"
     },
+    "editor": {
+      "loading_session": "Loading wall session...",
+      "error_session": "Error loading wall session",
+      "unsaved_warning": "You have unsaved changes. Are you sure you want to leave?",
+      "add_holds": "Add holds to quick access",
+      "save": "Save",
+      "session_name_placeholder": "Session name",
+      "tutorial_title": "Controls",
+      "tutorial_rotate": "Left click — Rotate",
+      "tutorial_pan": "Right click / Ctrl+click — Pan",
+      "tutorial_zoom": "Scroll — Zoom",
+      "tutorial_center": "Double-click — Center"
+    },
     "footer": {
       "org": "SetRsoft Organisation",
       "docs": "Dokumentation",

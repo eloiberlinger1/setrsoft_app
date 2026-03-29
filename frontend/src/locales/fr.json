@@ -20,6 +20,19 @@
       "setter_desc": "Testez le logiciel et façonnez l'avenir de l'ouverture.",
       "setter_btn": "Tester l'application"
     },
+    "editor": {
+      "loading_session": "Chargement de la session mur...",
+      "error_session": "Erreur de chargement de la session",
+      "unsaved_warning": "Vous avez des modifications non sauvegardées. Voulez-vous vraiment quitter ?",
+      "add_holds": "Ajouter des prises à l'accès rapide",
+      "save": "Sauvegarder",
+      "session_name_placeholder": "Nom de session",
+      "tutorial_title": "Contrôles",
+      "tutorial_rotate": "Clic gauche — Rotation",
+      "tutorial_pan": "Clic droit / Ctrl+clic — Déplacer",
+      "tutorial_zoom": "Molette — Zoom",
+      "tutorial_center": "Double-clic — Centrer"
+    },
     "footer": {
       "org": "Organisation SetRsoft",
       "docs": "Documentation",

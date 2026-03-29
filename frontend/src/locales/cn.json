@@ -20,6 +20,19 @@
       "setter_desc": "测试软件并塑造定线的未来.",
       "setter_btn": "测试应用"
     },
+    "editor": {
+      "loading_session": "Loading wall session...",
+      "error_session": "Error loading wall session",
+      "unsaved_warning": "You have unsaved changes. Are you sure you want to leave?",
+      "add_holds": "Add holds to quick access",
+      "save": "Save",
+      "session_name_placeholder": "Session name",
+      "tutorial_title": "Controls",
+      "tutorial_rotate": "Left click — Rotate",
+      "tutorial_pan": "Right click / Ctrl+click — Pan",
+      "tutorial_zoom": "Scroll — Zoom",
+      "tutorial_center": "Double-click — Center"
+    },
     "footer": {
       "org": "SetRsoft 组织",
       "docs": "文档",

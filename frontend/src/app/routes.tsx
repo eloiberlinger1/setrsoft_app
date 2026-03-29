@@ -12,8 +12,11 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: ROUTES.GYM, element: <GymDashboard /> },
-      { path: ROUTES.EDITOR, element: <EditorView /> },
+      // /editor redirects to the demo session
+      { path: ROUTES.EDITOR, element: <Navigate to="/editor/demo" replace /> },
     ],
   },
+  // Editor lives outside Root — it is a full-screen canvas with its own nav
+  { path: '/editor/:wallId', element: <EditorView /> },
   { path: '*', element: <Navigate to={ROUTES.HOME} replace /> },
 ]);

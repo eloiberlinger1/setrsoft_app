@@ -7,4 +7,5 @@ export const ROUTES = {
   HOME: '/',
   GYM: '/gym',
   EDITOR: '/editor',
+  EDITOR_SESSION: '/editor/:wallId',
 } as const;
