@@ -48,9 +48,7 @@ export default function AddHoldModal({
   const { data, isLoading, error, isError } = useQuery({
     queryKey: ["gymstocks", gym_id, page],
     queryFn: async () => {
-      console.log("[AddHoldModal] gym_id:", gym_id, "| API_URL:", API_URL);
-      if (!gym_id || !API_URL) {
-        console.warn("[AddHoldModal] Missing gym_id or API_URL, returning empty");
+      if (!gym_id) {
         return { count: 0, stock: [], holds: [] };
       }
       let url: string;

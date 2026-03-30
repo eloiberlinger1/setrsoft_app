@@ -38,6 +38,11 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
+            '--if-empty',
+            action='store_true',
+            help='Skip sync if HoldType records already exist (for first-boot automation)',
+        )
+        parser.add_argument(
             '--source',
             type=str,
             default=None,
@@ -56,6 +61,10 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+        if options['if_empty'] and HoldType.objects.exists():
+            self.stdout.write("HoldType records already exist — skipping sync.")
+            return
+
         dry_run = options['dry_run']
         demo_gym = Gym.objects.filter(id=1).first()
 
