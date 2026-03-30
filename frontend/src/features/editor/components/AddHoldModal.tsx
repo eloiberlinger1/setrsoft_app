@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Hold360 from "../stubs/Hold360";
+import React, { useState, useRef } from "react";
+import Hold360, { HoldScrollContext } from "../stubs/Hold360";
 import { useQuery } from "@tanstack/react-query";
 import HandleAddHold from "../utils/HandleAddHold";
 import { useEditorAuth } from "../mocks/useEditorAuth";
@@ -31,6 +31,7 @@ export default function AddHoldModal({
 }: AddHoldModalProps) {
   const [search, setSearch] = useState("");
   const [isAdding, setIsAdding] = useState(false);
+  const scrollRef = useRef<HTMLElement>(null);
   const [addedHoldIds, setAddedHoldIds] = useState<Set<number>>(new Set());
   const { user, authenticatedFetch } = useEditorAuth();
   const [page, setPage] = useState(1);
@@ -186,7 +187,8 @@ export default function AddHoldModal({
           </div>
         )}
 
-        <div className="w-full flex-1 overflow-y-auto">
+        <HoldScrollContext.Provider value={scrollRef}>
+        <div ref={scrollRef as React.RefObject<HTMLDivElement>} className="w-full flex-1 overflow-y-auto">
           {isLoading || data === undefined ? (
             <div className="flex justify-center items-center h-32">
               <div className="text-gray-500">
@@ -247,6 +249,7 @@ export default function AddHoldModal({
             </>
           )}
         </div>
+        </HoldScrollContext.Provider>
       </div>
     </div>
   );

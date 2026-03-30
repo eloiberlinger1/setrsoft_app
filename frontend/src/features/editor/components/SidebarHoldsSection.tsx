@@ -3,9 +3,10 @@ import {
   forwardRef,
   useImperativeHandle,
   useEffect,
+  useRef,
 } from "react";
 import { useDragStore, usePlacementStore } from "../store";
-import Hold360 from "../stubs/Hold360";
+import Hold360, { HoldScrollContext } from "../stubs/Hold360";
 import React from "react";
 import { useEditorAuth } from "../mocks/useEditorAuth";
 import { useTranslation } from "react-i18next";
@@ -35,6 +36,7 @@ const SidebarHoldsSection = forwardRef<
   const [models, setModels] = useState(holdModels);
   const [showHolds, setShowHolds] = useState(true);
   const [showVolumes, setShowVolumes] = useState(true);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setModels((prevModels) => {
@@ -206,7 +208,8 @@ const SidebarHoldsSection = forwardRef<
   };
 
   return (
-    <section>
+    <HoldScrollContext.Provider value={scrollRef}>
+    <section ref={scrollRef as React.RefObject<HTMLElement>}>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-base font-medium text-gray-900">
           {t("Quick Access")}
@@ -256,6 +259,7 @@ const SidebarHoldsSection = forwardRef<
         )}
       </div>
     </section>
+    </HoldScrollContext.Provider>
   );
 });
 

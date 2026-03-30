@@ -11,6 +11,7 @@ import MainCanvas from "./components/MainCanvas";
 import Sidebar from "./components/Sidebar";
 import HoldInspector from "./components/HoldInspector";
 import FileManager from "./components/FileManager";
+import HoldPreviewCanvas from "./components/HoldPreviewCanvas";
 import { useTranslation } from "react-i18next";
 import Tutorial from "./components/Tutorial";
 
@@ -119,6 +120,8 @@ function EditorApp() {
 
   return (
     <div className="flex h-screen w-screen bg-blue-50 relative">
+      {/* Single shared WebGL canvas for all Hold360 previews */}
+      <HoldPreviewCanvas />
       <div className="w-4/5 h-full relative">
         <MainCanvas wallModels={wallModels} />
         <HoldInspector />
