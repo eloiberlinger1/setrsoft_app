@@ -38,7 +38,7 @@ const FileManager = ({ session_data }: { session_data: any }) => {
 
       if (session_data?.id) {
         const API_URL = import.meta.env.VITE_API_BASE;
-        const url = `${API_URL}/gym/wallsession/update/${session_data.id}`;
+        const url = `${API_URL}/gym/wallsession/update/${session_data.id}/`;
         await authenticatedFetch(url, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -62,7 +62,7 @@ const FileManager = ({ session_data }: { session_data: any }) => {
 
       if (session_data?.id) {
         const API_URL = import.meta.env.VITE_API_BASE;
-        const url = `${API_URL}/gym/wallsession/update/${session_data.id}`;
+        const url = `${API_URL}/gym/wallsession/update/${session_data.id}/`;
         await authenticatedFetch(url, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -83,7 +83,7 @@ const FileManager = ({ session_data }: { session_data: any }) => {
     const API_URL = import.meta.env.VITE_API_BASE;
     (async () => {
       try {
-        const url = `${API_URL}/gym/setwallsessionname/${session_data.id}`;
+        const url = `${API_URL}/gym/setwallsessionname/${session_data.id}/`;
         await authenticatedFetch(url, {
           method: "POST",
           headers: { "Content-Type": "application/json" },

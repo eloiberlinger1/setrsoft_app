@@ -16,7 +16,7 @@ export const useHandleLoadSession = (session_data: any) => {
       const API_URL = import.meta.env.VITE_API_BASE;
       (async () => {
         try {
-          const url = `${API_URL}/gym/getwallsessionlayout/${session_data.id}`;
+          const url = `${API_URL}/gym/getwallsessionlayout/${session_data.id}/`;
           const response = await authenticatedFetch(url, {
             method: "GET",
             headers: { "Content-Type": "application/json" },

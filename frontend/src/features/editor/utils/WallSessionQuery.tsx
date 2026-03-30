@@ -15,7 +15,7 @@ export default function useWallSessionQuery() {
   const fetchWallSession = async (wallId: string) => {
     try {
       const response = await authenticatedFetch(
-        `${API_URL}/gym/wallsession/${wallId}`
+        `${API_URL}/gym/wallsession/${wallId}/`
       );
       if (!response.ok) {
         return { ...MOCK_SESSION, wall_id: wallId };

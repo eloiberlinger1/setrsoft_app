@@ -1,18 +1,15 @@
 // Demo-mode auth shim.
-// Provides the editor-expected interface ({ user, authenticatedFetch })
-// without a real backend. All API calls gracefully fail/return empty data.
+// Uses the real backend — no authentication required (all endpoints are public).
+// Replace this with a real auth hook when login is implemented.
 
 export const DEMO_USER = {
   id: 'demo',
   related_gym_id: '1',
 };
 
-const demoFetch: typeof fetch = async () =>
-  new Response(JSON.stringify({}), { status: 200 });
-
 export function useEditorAuth() {
   return {
     user: DEMO_USER,
-    authenticatedFetch: demoFetch,
+    authenticatedFetch: fetch,
   };
 }

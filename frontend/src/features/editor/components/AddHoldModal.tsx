@@ -125,7 +125,7 @@ export default function AddHoldModal({
       const result = await HandleAddHold(hold, session_data, onHoldAdded);
       if (result.success) {
         await authenticatedFetch(
-          `${API_URL}/gym/changeholdtosessioncollection/${session_data.id}/1/${hold.id}`
+          `${API_URL}/gym/changeholdtosessioncollection/${session_data.id}/1/${hold.id}/`
         );
         setAddedHoldIds((prev) => new Set([...prev, hold.hold_type.id]));
       } else {
