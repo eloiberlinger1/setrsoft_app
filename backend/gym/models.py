@@ -11,22 +11,33 @@ class Gym(models.Model):
 class Wall(models.Model):
     gym = models.ForeignKey(Gym, on_delete=models.CASCADE, related_name='walls')
     name = models.CharField(max_length=200)
-    glb_file = models.FileField(upload_to='walls/')
+    cdn_ref = models.CharField(max_length=500, blank=True)  # HF dataset folder, e.g. "0000000001"
+    glb_file = models.FileField(upload_to='walls/', blank=True)  # fallback for local uploads
 
     def __str__(self):
         return f"{self.gym.name} — {self.name}"
 
 
 class HoldType(models.Model):
-    USAGE_CHOICES = [('hold', 'Hold'), ('volume', 'Volume')]
+    USAGE_CHOICES = [('hold', 'Hold'), ('volume', 'Volume'), ('unknown', 'Unknown')]
 
-    manufacturer_ref = models.CharField(max_length=200)
-    cdn_ref = models.CharField(max_length=500)
-    hold_usage_type = models.CharField(max_length=20, choices=USAGE_CHOICES, default='hold')
-    glb_file = models.FileField(upload_to='holds/', blank=True)
+    # HF dataset folder ID, e.g. "0000000001" — CDN URL is built from this at runtime
+    cdn_ref = models.CharField(max_length=20, unique=True)
+
+    manufacturer = models.CharField(max_length=200, default='unknown')
+    model = models.CharField(max_length=200, default='unknown')
+    size = models.CharField(max_length=100, default='unknown')
+    hold_usage_type = models.CharField(max_length=20, choices=USAGE_CHOICES, default='unknown')
+    available_colors = models.JSONField(default=list)   # e.g. ["#FF3200", "#2962A7"]
+    color_of_scan = models.CharField(max_length=7, blank=True)  # e.g. "#FF3200"
+
+    # Keep manufacturer_ref for backwards compatibility with existing frontend code
+    @property
+    def manufacturer_ref(self):
+        return f"{self.manufacturer} — {self.model}" if self.model != 'unknown' else self.manufacturer
 
     def __str__(self):
-        return self.manufacturer_ref
+        return f"{self.cdn_ref} ({self.manufacturer} / {self.model})"
 
 
 class HoldInstance(models.Model):

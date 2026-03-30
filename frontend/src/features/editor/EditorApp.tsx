@@ -117,11 +117,12 @@ function EditorApp() {
 
   if (session_data?.related_holds_collection) {
     session_data.holds_collection_instances?.forEach((hold: any) => {
-      const glbUrl = `${API_URL}/gym/getholdfile/hold/${hold.hold_type.id}/`;
-      hold.hold_type.glb_url = glbUrl;
+      // glb_url is provided directly by the serializer (HF CDN URL)
       hold.hold_instance_id = hold.id;
       holdModels.push(hold);
-      holdModelsGLBURL.push(glbUrl);
+      if (hold.hold_type?.glb_url) {
+        holdModelsGLBURL.push(hold.hold_type.glb_url);
+      }
     });
   }
 

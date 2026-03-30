@@ -1,11 +1,32 @@
+from django.conf import settings
 from rest_framework import serializers
+
 from .models import Gym, Wall, HoldType, HoldInstance, WallSession
 
 
 class HoldTypeSerializer(serializers.ModelSerializer):
+    glb_url = serializers.SerializerMethodField()
+    manufacturer_ref = serializers.CharField(read_only=True)  # property on model
+
     class Meta:
         model = HoldType
-        fields = ['id', 'manufacturer_ref', 'cdn_ref', 'hold_usage_type']
+        fields = [
+            'id',
+            'cdn_ref',
+            'manufacturer',
+            'manufacturer_ref',
+            'model',
+            'size',
+            'hold_usage_type',
+            'available_colors',
+            'color_of_scan',
+            'glb_url',
+        ]
+
+    def get_glb_url(self, obj):
+        if not obj.cdn_ref:
+            return None
+        return f"{settings.HOLDS_CDN_BASE}/{obj.cdn_ref}/hold.glb"
 
 
 class HoldInstanceSerializer(serializers.ModelSerializer):
@@ -17,9 +38,20 @@ class HoldInstanceSerializer(serializers.ModelSerializer):
 
 
 class WallSerializer(serializers.ModelSerializer):
+    glb_url = serializers.SerializerMethodField()
+
     class Meta:
         model = Wall
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'glb_url']
+
+    def get_glb_url(self, obj):
+        if obj.cdn_ref:
+            return f"{settings.WALLS_CDN_BASE}/{obj.cdn_ref}/wall.glb"
+        if obj.glb_file:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(obj.glb_file.url)
+        return None
 
 
 class WallSessionSerializer(serializers.ModelSerializer):

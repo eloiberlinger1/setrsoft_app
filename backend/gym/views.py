@@ -1,5 +1,6 @@
+from django.conf import settings
 from django.http import FileResponse, Http404
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -10,7 +11,7 @@ from .serializers import WallSessionSerializer, HoldInstanceSerializer
 @api_view(['GET'])
 def wall_session(request, wall_id):
     session = get_object_or_404(WallSession, wall__id=wall_id)
-    return Response(WallSessionSerializer(session).data)
+    return Response(WallSessionSerializer(session, context={'request': request}).data)
 
 
 @api_view(['GET'])
@@ -38,17 +39,19 @@ def set_wall_session_name(request, session_id):
 @api_view(['GET'])
 def get_wall_file(request, wall_id):
     wall = get_object_or_404(Wall, id=wall_id)
-    if not wall.glb_file:
-        raise Http404
-    return FileResponse(wall.glb_file.open('rb'), content_type='model/gltf-binary')
+    if wall.cdn_ref:
+        return redirect(f"{settings.WALLS_CDN_BASE}/{wall.cdn_ref}/wall.glb")
+    if wall.glb_file:
+        return FileResponse(wall.glb_file.open('rb'), content_type='model/gltf-binary')
+    raise Http404
 
 
 @api_view(['GET'])
 def get_hold_file(request, hold_type_id):
     hold_type = get_object_or_404(HoldType, id=hold_type_id)
-    if not hold_type.glb_file:
+    if not hold_type.cdn_ref:
         raise Http404
-    return FileResponse(hold_type.glb_file.open('rb'), content_type='model/gltf-binary')
+    return redirect(f"{settings.HOLDS_CDN_BASE}/{hold_type.cdn_ref}/hold.glb")
 
 
 @api_view(['GET'])

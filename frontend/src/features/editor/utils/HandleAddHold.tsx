@@ -1,7 +1,10 @@
 interface HoldType {
   id: string | number;
-  manufacturer_ref: string;
   cdn_ref: string;
+  manufacturer_ref?: string;
+  manufacturer?: string;
+  model?: string;
+  glb_url?: string;       // provided by the serializer (HF CDN URL)
   [key: string]: unknown;
 }
 
@@ -16,15 +19,15 @@ export default async function HandleAddHold(
   onHoldAdded: ((hold: any) => void) | undefined
 ) {
   try {
-    const API_URL = import.meta.env.VITE_API_BASE;
     const newHoldInstance = {
       hold_instance_id: selectedHold.id,
       id: selectedHold.id,
-      name: selectedHold.hold_type.manufacturer_ref,
+      name: selectedHold.hold_type.manufacturer_ref
+        ?? `${selectedHold.hold_type.manufacturer ?? ''} ${selectedHold.hold_type.model ?? ''}`.trim(),
       file: selectedHold.hold_type.cdn_ref,
       hold_type: {
         ...selectedHold.hold_type,
-        glb_url: `${API_URL}/gym/getholdfile/hold/${selectedHold.hold_type.id}/`,
+        // glb_url is already set by the serializer — no need to reconstruct it
       },
     };
 

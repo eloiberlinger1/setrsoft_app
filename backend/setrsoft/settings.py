@@ -105,6 +105,16 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Hugging Face CDN bases — override in .env to pin a specific branch/commit
+HOLDS_CDN_BASE = os.environ.get(
+    'HOLDS_CDN_BASE',
+    'https://huggingface.co/datasets/setrsoft/climbing-holds/resolve/main',
+)
+WALLS_CDN_BASE = os.environ.get(
+    'WALLS_CDN_BASE',
+    'https://huggingface.co/datasets/setrsoft/climbing-walls/resolve/main',
+)
 STORAGES = {
     'default': {
         'BACKEND': 'django.core.files.storage.FileSystemStorage',
