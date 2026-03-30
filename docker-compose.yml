@@ -25,7 +25,7 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
-    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    command: ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
     volumes:
       - ./backend:/app
     ports:
@@ -38,7 +38,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
       SECRET_KEY: ${SECRET_KEY:-dev-secret-key-change-in-production}
       DEBUG: ${DEBUG:-True}
-      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1},backend
       TRUST_PROXY: ${TRUST_PROXY:-}
     depends_on:
       db:
@@ -49,6 +49,8 @@ services:
     working_dir: /app
     env_file:
       - .env
+    environment:
+      BACKEND_URL: http://backend:8000
     volumes:
       - ./frontend:/app
       - frontend_node_modules:/app/node_modules
