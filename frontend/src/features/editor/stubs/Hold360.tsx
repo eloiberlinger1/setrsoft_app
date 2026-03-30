@@ -32,7 +32,7 @@ function HoldScene({ url }: { url: string }) {
   return (
     <>
       {/* Slightly plunging view: camera above the hold looking down */}
-      <PerspectiveCamera makeDefault position={[0, 0.6, 1.8]} fov={40} />
+      <PerspectiveCamera makeDefault position={[0, 0.2, 1.8]} fov={40} />
       <ambientLight intensity={0.8} />
       <directionalLight position={[2, 3, 2]} intensity={1.2} />
       <group ref={groupRef}>
