@@ -40,7 +40,7 @@ def set_wall_session_name(request, session_id):
 def get_wall_file(request, wall_id):
     wall = get_object_or_404(Wall, id=wall_id)
     if wall.cdn_ref:
-        return redirect(f"{settings.WALLS_CDN_BASE}/{wall.cdn_ref}/wall.glb")
+        return redirect(f"{settings.WALLS_CDN_BASE}/{wall.cdn_ref}")
     if wall.glb_file:
         return FileResponse(wall.glb_file.open('rb'), content_type='model/gltf-binary')
     raise Http404

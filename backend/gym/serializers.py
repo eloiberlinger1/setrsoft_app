@@ -46,7 +46,8 @@ class WallSerializer(serializers.ModelSerializer):
 
     def get_glb_url(self, obj):
         if obj.cdn_ref:
-            return f"{settings.WALLS_CDN_BASE}/{obj.cdn_ref}/wall.glb"
+            # cdn_ref stores the full relative path, e.g. "demo/demo.glb"
+            return f"{settings.WALLS_CDN_BASE}/{obj.cdn_ref}"
         if obj.glb_file:
             request = self.context.get('request')
             if request:
