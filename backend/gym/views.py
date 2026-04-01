@@ -55,6 +55,15 @@ def get_hold_file(request, hold_type_id):
 
 
 @api_view(['GET'])
+def get_hold_sprite_sheet(request, hold_type_id):
+    hold_type = get_object_or_404(HoldType, id=hold_type_id)
+    if not hold_type.cdn_ref or not hold_type.color_of_scan:
+        raise Http404
+    color = hold_type.color_of_scan.lstrip('#')
+    return redirect(f"{settings.HOLDS_CDN_BASE}/{hold_type.cdn_ref}/360/{color}.png")
+
+
+@api_view(['GET'])
 def stock_explore(request, gym_id):
     get_object_or_404(Gym, id=gym_id)
 

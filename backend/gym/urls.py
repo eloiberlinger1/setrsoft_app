@@ -8,6 +8,7 @@ urlpatterns = [
     path('setwallsessionname/<int:session_id>/', views.set_wall_session_name),
     path('getwallfile/<int:wall_id>/', views.get_wall_file),
     path('getholdfile/hold/<int:hold_type_id>/', views.get_hold_file),
+    path('getholdspritesheet/hold/<int:hold_type_id>/', views.get_hold_sprite_sheet),
     path('stock-explore/<int:gym_id>/', views.stock_explore),
     path(
         'changeholdtosessioncollection/<int:session_id>/<int:flag>/<int:hold_id>/',

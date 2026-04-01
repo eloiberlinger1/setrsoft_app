@@ -1,46 +1,16 @@
-import { createContext, useContext, useRef, useState, useEffect, useMemo, Suspense } from "react";
-import { View, PerspectiveCamera, useGLTF } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
+import { createContext, useContext, useRef, useState, useEffect } from "react";
 
 /**
  * Provide a ref to the scrollable container so Hold360 can scope its
- * IntersectionObserver to that container — preventing WebGL renders from
+ * IntersectionObserver to that container — preventing renders from
  * appearing outside the container's visible area.
  */
 export const HoldScrollContext = createContext<React.RefObject<HTMLElement | null> | null>(null);
 
-function HoldScene({ url }: { url: string }) {
-  const { scene } = useGLTF(url);
-  const groupRef = useRef<THREE.Group>(null);
-
-  useFrame((_, delta) => {
-    if (groupRef.current) groupRef.current.rotation.y += delta * 0.8;
-  });
-
-  const cloned = useMemo(() => {
-    const c = scene.clone();
-    const box = new THREE.Box3().setFromObject(c);
-    const center = box.getCenter(new THREE.Vector3());
-    c.position.sub(center);
-    const size = box.getSize(new THREE.Vector3());
-    const maxDim = Math.max(size.x, size.y, size.z);
-    if (maxDim > 0) c.scale.setScalar(1 / maxDim);
-    return c;
-  }, [scene]);
-
-  return (
-    <>
-      {/* Slightly plunging view: camera above the hold looking down */}
-      <PerspectiveCamera makeDefault position={[0, 0.2, 1.8]} fov={40} />
-      <ambientLight intensity={0.8} />
-      <directionalLight position={[2, 3, 2]} intensity={1.2} />
-      <group ref={groupRef}>
-        <primitive object={cloned} />
-      </group>
-    </>
-  );
-}
+const COLS = 6;
+const ROWS = 6;
+const TOTAL_FRAMES = COLS * ROWS; // 36
+const FRAME_INTERVAL_MS = 30;
 
 export default function Hold360({
   cdn_ref: _cdn_ref,
@@ -53,41 +23,100 @@ export default function Hold360({
   className?: string;
   setCurrentDownloadUrl?: (url: string) => void;
 }) {
-  const glb_url: string | undefined = (hold as any)?.hold_type?.glb_url;
+  const sprite_sheet_url: string | undefined = (hold as any)?.hold_type?.sprite_sheet_url;
   const [isVisible, setIsVisible] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [frame, setFrame] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const scrollContainer = useContext(HoldScrollContext);
 
   useEffect(() => {
     const el = containerRef.current;
-    if (!el || !glb_url) return;
+    if (!el || !sprite_sheet_url) return;
     const observer = new IntersectionObserver(
       ([entry]) => setIsVisible(entry.isIntersecting),
       {
-        // Scope to the scroll container so holds scrolled out of the
-        // container's visible area are unmounted and won't bleed outside it.
         root: scrollContainer?.current ?? null,
         rootMargin: "40px",
       }
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, [glb_url, scrollContainer]);
+  }, [sprite_sheet_url, scrollContainer]);
+
+  // Reset loaded state when URL changes
+  useEffect(() => {
+    setIsLoaded(false);
+    setFrame(0);
+  }, [sprite_sheet_url]);
+
+  function handleMouseEnter() {
+    if (!isLoaded) return;
+    intervalRef.current = setInterval(() => {
+      setFrame((f) => (f + 1) % TOTAL_FRAMES);
+    }, FRAME_INTERVAL_MS);
+  }
+
+  function handleMouseLeave() {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+    setFrame(0);
+  }
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
+
+  const col = frame % COLS;
+  const row = Math.floor(frame / COLS);
+  const bgX = col * (100 / (COLS - 1));
+  const bgY = row * (100 / (ROWS - 1));
 
   return (
     <div ref={containerRef} className={className ?? ""} style={{ minHeight: 80 }}>
-      {glb_url && isVisible ? (
-        <View style={{ width: "100%", height: "100%", minHeight: 80 }}>
-          <Suspense fallback={null}>
-            <HoldScene url={glb_url} />
-          </Suspense>
-        </View>
+      {sprite_sheet_url && isVisible ? (
+        <>
+          {/* Preload image to detect when it's ready */}
+          {!isLoaded && (
+            <img
+              src={sprite_sheet_url}
+              alt=""
+              style={{ display: "none" }}
+              onLoad={() => setIsLoaded(true)}
+            />
+          )}
+          <div
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            style={{
+              width: "100%",
+              minHeight: 80,
+              height: "100%",
+              backgroundImage: isLoaded ? `url(${sprite_sheet_url})` : undefined,
+              backgroundSize: `${COLS * 100}% ${ROWS * 100}%`,
+              backgroundPosition: `${bgX}% ${bgY}%`,
+              backgroundRepeat: "no-repeat",
+            }}
+          >
+            {!isLoaded && (
+              <div className="flex items-center justify-center w-full h-full" style={{ minHeight: 80 }}>
+                <div className="w-5 h-5 border-2 border-gray-300 border-t-blue-400 rounded-full animate-spin" />
+              </div>
+            )}
+          </div>
+        </>
       ) : (
         <div
           className="flex items-center justify-center w-full rounded bg-gray-50"
           style={{ minHeight: 80 }}
         >
-          {glb_url ? (
+          {sprite_sheet_url ? (
             <div className="w-5 h-5 border-2 border-gray-300 border-t-blue-400 rounded-full animate-spin" />
           ) : (
             <span className="text-gray-400 text-xs">—</span>

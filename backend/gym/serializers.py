@@ -6,6 +6,7 @@ from .models import Gym, Wall, HoldType, HoldInstance, WallSession
 
 class HoldTypeSerializer(serializers.ModelSerializer):
     glb_url = serializers.SerializerMethodField()
+    sprite_sheet_url = serializers.SerializerMethodField()
     manufacturer_ref = serializers.CharField(read_only=True)  # property on model
 
     class Meta:
@@ -21,12 +22,19 @@ class HoldTypeSerializer(serializers.ModelSerializer):
             'available_colors',
             'color_of_scan',
             'glb_url',
+            'sprite_sheet_url',
         ]
 
     def get_glb_url(self, obj):
         if not obj.cdn_ref:
             return None
         return f"{settings.HOLDS_CDN_BASE}/{obj.cdn_ref}/hold.glb"
+
+    def get_sprite_sheet_url(self, obj):
+        if not obj.cdn_ref or not obj.color_of_scan:
+            return None
+        color = obj.color_of_scan.lstrip('#').lower()
+        return f"{settings.HOLDS_CDN_BASE}/{obj.cdn_ref}/360/{color}.png"
 
 
 class HoldInstanceSerializer(serializers.ModelSerializer):
