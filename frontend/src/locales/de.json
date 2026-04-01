@@ -18,7 +18,10 @@
       "dev_btn": "Auf GitHub ansehen",
       "setter_title": "Routenbauer",
       "setter_desc": "Teste die Software und gestalte die Zukunft des Routenbaus.",
-      "setter_btn": "App testen"
+      "setter_btn": "App testen",
+      "stats_loading": "Lädt...",
+      "stats_stars_label": "Sterne",
+      "stats_forks_label": "Forks"
     },
     "editor": {
       "loading_session": "Loading wall session...",

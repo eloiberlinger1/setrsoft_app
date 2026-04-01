@@ -18,7 +18,10 @@
       "dev_btn": "Посмотреть на GitHub",
       "setter_title": "Постановщики трасс",
       "setter_desc": "Протестируйте программное обеспечение и сформируйте будущее постановки трасс.",
-      "setter_btn": "Протестировать приложение"
+      "setter_btn": "Протестировать приложение",
+      "stats_loading": "Загрузка...",
+      "stats_stars_label": "Звёзды",
+      "stats_forks_label": "Форки"
     },
     "editor": {
       "loading_session": "Loading wall session...",

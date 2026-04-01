@@ -18,7 +18,10 @@
       "dev_btn": "在GitHub上查看",
       "setter_title": "定线员",
       "setter_desc": "测试软件并塑造定线的未来.",
-      "setter_btn": "测试应用"
+      "setter_btn": "测试应用",
+      "stats_loading": "加载中...",
+      "stats_stars_label": "星标",
+      "stats_forks_label": "分叉"
     },
     "editor": {
       "loading_session": "Loading wall session...",

@@ -18,7 +18,10 @@
       "dev_btn": "View on GitHub",
       "setter_title": "Routesetters",
       "setter_desc": "Test the software and shape the future of routesetting.",
-      "setter_btn": "Test the App"
+      "setter_btn": "Test the App",
+      "stats_loading": "Loading...",
+      "stats_stars_label": "Stars",
+      "stats_forks_label": "Forks"
     },
     "editor": {
       "loading_session": "Loading wall session...",

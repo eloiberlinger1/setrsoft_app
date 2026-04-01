@@ -91,20 +91,20 @@ export function HomePage() {
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                 <span>
                   {repoStats
-                    ? `${repoStats.stars.toLocaleString()} Stars`
+                    ? `${repoStats.stars.toLocaleString()} ${t('split.stats_stars_label')}`
                     : repoStatsError
-                      ? `— Stars`
-                      : 'Loading...'}
+                      ? `— ${t('split.stats_stars_label')}`
+                      : t('split.stats_loading')}
                 </span>
               </div>
               <div className="flex items-center gap-1.5 text-sm text-on-surface-variant font-tabular-nums">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><circle cx="18" cy="6" r="3"></circle><path d="M18 9v1a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2V9"></path><path d="M12 12v3"></path></svg>
                 <span>
                   {repoStats
-                    ? `${repoStats.forks.toLocaleString()} Forks`
+                    ? `${repoStats.forks.toLocaleString()} ${t('split.stats_forks_label')}`
                     : repoStatsError
-                      ? `— Forks`
-                      : 'Loading...'}
+                      ? `— ${t('split.stats_forks_label')}`
+                      : t('split.stats_loading')}
                 </span>
               </div>
             </div>
