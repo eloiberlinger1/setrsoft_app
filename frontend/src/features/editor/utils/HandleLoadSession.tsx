@@ -68,7 +68,7 @@ export const useHandleLoadSession = (session_data: any) => {
       })();
     }
   }, [
-    session_data?.id,
+    session_data,
     authenticatedFetch,
     setObjects,
     setWallColors,
