@@ -1,15 +1,10 @@
 import { createContext, useContext, useRef, useState, useEffect } from "react";
 
-/**
- * Provide a ref to the scrollable container so Hold360 can scope its
- * IntersectionObserver to that container — preventing renders from
- * appearing outside the container's visible area.
- */
 export const HoldScrollContext = createContext<React.RefObject<HTMLElement | null> | null>(null);
 
 const COLS = 6;
 const ROWS = 6;
-const TOTAL_FRAMES = COLS * ROWS; // 36
+const TOTAL_FRAMES = COLS * ROWS;
 const FRAME_INTERVAL_MS = 30;
 
 export default function Hold360({
@@ -44,12 +39,6 @@ export default function Hold360({
     observer.observe(el);
     return () => observer.disconnect();
   }, [sprite_sheet_url, scrollContainer]);
-
-  // Reset loaded state when URL changes
-  useEffect(() => {
-    setIsLoaded(false);
-    setFrame(0);
-  }, [sprite_sheet_url]);
 
   function handleMouseEnter() {
     if (!isLoaded) return;
