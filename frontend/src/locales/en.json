@@ -9,7 +9,7 @@
     "hero": {
       "subtitle": "We bring technology to serve the climbing industry",
       "test_editor": "Test the editor",
-      "holds_database": "World climbing holds database",
+      "holds_database": "Public climbing holds database",
       "stock_management": "Routesetting stock management"
     },
     "split": {
@@ -18,7 +18,23 @@
       "dev_btn": "View on GitHub",
       "setter_title": "Routesetters",
       "setter_desc": "Test the software and shape the future of routesetting.",
-      "setter_btn": "Test the App"
+      "setter_btn": "Test the App",
+      "stats_loading": "Loading...",
+      "stats_stars_label": "Stars",
+      "stats_forks_label": "Forks"
+    },
+    "editor": {
+      "loading_session": "Loading wall session...",
+      "error_session": "Error loading wall session",
+      "unsaved_warning": "You have unsaved changes. Are you sure you want to leave?",
+      "add_holds": "Add holds to quick access",
+      "save": "Save",
+      "session_name_placeholder": "Session name",
+      "tutorial_title": "Controls",
+      "tutorial_rotate": "Left click — Rotate",
+      "tutorial_pan": "Right click / Ctrl+click — Pan",
+      "tutorial_zoom": "Scroll — Zoom",
+      "tutorial_center": "Double-click — Center"
     },
     "footer": {
       "org": "SetRsoft organisation",

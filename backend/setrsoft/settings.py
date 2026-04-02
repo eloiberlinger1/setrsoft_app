@@ -31,13 +31,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'api',
+    'gym',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -91,8 +94,27 @@ USE_L10N = True
 USE_TZ = True
 TIME_ZONE = 'UTC'
 
+CORS_ALLOWED_ORIGINS = [
+    o.strip()
+    for o in os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:5173,http://127.0.0.1:5173').split(',')
+    if o.strip()
+]
+
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# Hugging Face CDN bases — override in .env to pin a specific branch/commit
+HOLDS_CDN_BASE = os.environ.get(
+    'HOLDS_CDN_BASE',
+    'https://huggingface.co/datasets/setrsoft/climbing-holds/resolve/main',
+)
+WALLS_CDN_BASE = os.environ.get(
+    'WALLS_CDN_BASE',
+    'https://huggingface.co/datasets/setrsoft/climbing-walls/resolve/main',
+)
 STORAGES = {
     'default': {
         'BACKEND': 'django.core.files.storage.FileSystemStorage',

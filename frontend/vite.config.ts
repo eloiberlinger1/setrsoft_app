@@ -16,4 +16,11 @@ export default defineConfig({
       '@/app': path.resolve(__dirname, 'src/app'),
     },
   },
+  server: {
+    proxy: (() => {
+      const backendUrl = process.env.BACKEND_URL ?? 'http://localhost:8000';
+      const targets = ['/api', '/gym', '/admin', '/static', '/media'];
+      return Object.fromEntries(targets.map((p) => [p, backendUrl]));
+    })(),
+  },
 })
