@@ -23,3 +23,18 @@
     @apply bg-background text-on-background font-inter antialiased;
   }
 }
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.viewport-grid {
+  background-image:
+    linear-gradient(to right, #1c1b1b 1px, transparent 1px),
+    linear-gradient(to bottom, #1c1b1b 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.gradient-mint {
+  background: linear-gradient(135deg, #00e297 0%, #00ffab 100%);
+}

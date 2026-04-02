@@ -20,14 +20,27 @@ interface HoldInstance {
   hold_type?: {
     glb_url?: string;
   };
-  [key: string]: unknown; 
+  [key: string]: unknown;
 }
+
+const tools = [
+  { id: "select", icon: "near_me", label: "Select", fill: true },
+  { id: "translate", icon: "open_with", label: "Translate" },
+  { id: "rotate", icon: "sync", label: "Rotate" },
+  { id: "scale", icon: "aspect_ratio", label: "Scale" },
+];
+
+const viewTools = [
+  { id: "orbit", icon: "3d_rotation", label: "View Orbit" },
+  { id: "grid", icon: "grid_4x4", label: "Grid Toggle" },
+];
 
 function EditorApp() {
   const { wallId } = useParams<{ wallId: string }>();
   const { fetchWallSession } = useWallSessionQuery();
   const { t } = useTranslation();
   const [wallModels, setWallModels] = useState<string[]>([]);
+  const [activeTool, setActiveTool] = useState("select");
 
   const setObjects = usePlacementStore((s) => s.setObjects);
   const setWallColors = usePlacementStore((s) => s.setWallColors);
@@ -73,12 +86,9 @@ function EditorApp() {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [hasUnsavedChanges, t]);
 
-  // Collect hold models from session data
   const holdModels: Array<Record<string, HoldInstance>> = [];
   const holdModelsGLBURL: string[] = [];
 
-  // Use glb_url from the serializer directly (HF CDN or local media URL)
-  // No fetch/blob needed — three.js loads URLs directly
   useEffect(() => {
     const glbUrl = session_data?.related_wall?.glb_url;
     setWallModels(glbUrl ? [glbUrl] : []);
@@ -111,29 +121,101 @@ function EditorApp() {
       window.removeEventListener("preloadGLB", handleGlobalPreload as EventListener);
   }, [preload]);
 
-  if (isLoading) return <div>{t("Loading wall session")}...</div>;
+  if (isLoading) return <div className="flex h-screen w-screen bg-surface items-center justify-center text-on-surface-variant">{t("Loading wall session")}...</div>;
   if (isError)
     return (
-      <div>
+      <div className="flex h-screen w-screen bg-surface items-center justify-center text-on-surface-variant">
         {t("Error loading wall session:", { error: (error as Error).message })}
       </div>
     );
 
   return (
-    <div className="flex h-screen w-screen bg-blue-50 relative">
-      <div className="w-4/5 h-full relative">
-        <MainCanvas wallModels={wallModels} />
-        <HoldInspector />
-        <FileManager session_data={session_data} />
-        <Tutorial />
-      </div>
-      <div className="w-1/5 h-full border-l border-blue-200 bg-white">
-        <Sidebar
-          wallModels={wallModels}
-          holdModels={holdModels}
-          session_data={session_data}
-        />
-      </div>
+    <div className="flex flex-col h-screen w-screen bg-surface overflow-hidden">
+      {/* TopNavBar */}
+      <nav className="fixed top-0 w-full z-50 bg-surface/60 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.8)] h-16 flex-shrink-0">
+        <div className="flex justify-between items-center w-full px-8 h-full max-w-full">
+          <div className="flex items-center gap-8">
+            <span className="text-xl font-black tracking-tighter text-on-surface">SetRsoft</span>
+            <div className="hidden md:flex items-center gap-6">
+              <span className="font-bold tracking-tight uppercase text-sm text-mint border-b-2 border-mint pb-1 cursor-default">
+                Editor
+              </span>
+              <span className="font-bold tracking-tight uppercase text-sm text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">
+                Database
+              </span>
+              <span className="font-bold tracking-tight uppercase text-sm text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">
+                Inventory
+              </span>
+              <span className="font-bold tracking-tight uppercase text-sm text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">
+                Docs
+              </span>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <FileManager session_data={session_data} />
+          </div>
+        </div>
+      </nav>
+
+      {/* Main Workspace */}
+      <main className="flex flex-1 pt-16 h-screen overflow-hidden">
+        {/* Left Toolbar */}
+        <aside className="w-16 bg-surface-lowest flex flex-col items-center py-4 gap-4 z-30 flex-shrink-0">
+          <div className="flex flex-col gap-2">
+            {tools.map((tool, i) => (
+              <>
+                {i === 1 && (
+                  <div key="sep" className="h-px w-6 bg-ghost-border/20 self-center my-1" />
+                )}
+                <button
+                  key={tool.id}
+                  title={tool.label}
+                  onClick={() => setActiveTool(tool.id)}
+                  className={`w-10 h-10 flex items-center justify-center transition-all active:scale-95 ${
+                    activeTool === tool.id
+                      ? "bg-surface-high text-mint rounded-lg"
+                      : "text-on-surface-variant hover:bg-surface-low"
+                  }`}
+                >
+                  <span
+                    className="material-symbols-outlined"
+                    style={activeTool === tool.id && tool.fill ? { fontVariationSettings: "'FILL' 1" } : undefined}
+                  >
+                    {tool.icon}
+                  </span>
+                </button>
+              </>
+            ))}
+          </div>
+          <div className="mt-auto flex flex-col gap-2">
+            {viewTools.map((tool) => (
+              <button
+                key={tool.id}
+                title={tool.label}
+                className="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:bg-surface-low transition-all"
+              >
+                <span className="material-symbols-outlined">{tool.icon}</span>
+              </button>
+            ))}
+          </div>
+        </aside>
+
+        {/* Central Viewport */}
+        <section className="flex-1 relative bg-surface viewport-grid overflow-hidden">
+          <MainCanvas wallModels={wallModels} />
+          <HoldInspector />
+          <Tutorial />
+        </section>
+
+        {/* Right Sidebar */}
+        <aside className="w-80 bg-surface-low flex flex-col z-30 flex-shrink-0">
+          <Sidebar
+            wallModels={wallModels}
+            holdModels={holdModels}
+            session_data={session_data}
+          />
+        </aside>
+      </main>
     </div>
   );
 }
