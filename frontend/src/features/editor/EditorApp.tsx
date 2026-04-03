@@ -62,11 +62,7 @@ function EditorApp() {
       handleLoad();
       if (!sessionOpenedRef.current) {
         sessionOpenedRef.current = true;
-        posthog.capture({
-          distinctId: 'demo',
-          event: 'editor session opened',
-          properties: { wall_id: wallId, session_id: session_data.id },
-        });
+        posthog.capture('editor session opened', { wall_id: wallId, session_id: session_data.id });
       }
     }
   }, [session_data?.id, wallModels.length, handleLoad]);
