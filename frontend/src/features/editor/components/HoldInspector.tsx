@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { usePlacementStore } from "../store";
 import { useTranslation } from "react-i18next";
+import { posthog } from "@/shared/analytics/posthog";
 
 function RotationHandle({
   rotation,
@@ -145,8 +146,11 @@ const HoldInspector = () => {
         {/* Actions */}
         <div className="flex gap-2 mb-4">
           <button
-            className="flex-1 inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-red-400 bg-surface-lowest border border-ghost-border hover:bg-surface-high transition-colors"
-            onClick={() => removeObject(selected.id)}
+            className="flex-1 inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-red-700 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 transition-colors"
+            onClick={() => {
+              posthog.capture({ distinctId: 'demo', event: 'hold removed', properties: { hold_name: selected.name, hold_id: selected.id } });
+              removeObject(selected.id);
+            }}
           >
             <svg
               className="w-4 h-4 mr-1.5"
@@ -208,7 +212,10 @@ const HoldInspector = () => {
                     <button
                       className="p-1.5 text-on-surface-variant hover:text-red-400 hover:bg-surface-high rounded transition-colors"
                       title="Delete child hold"
-                      onClick={() => removeObject(child.id)}
+                      onClick={() => {
+                        posthog.capture({ distinctId: 'demo', event: 'hold removed', properties: { hold_name: child.name, hold_id: child.id, is_child: true } });
+                        removeObject(child.id);
+                      }}
                     >
                       <svg
                         className="w-4 h-4"
