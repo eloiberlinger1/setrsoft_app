@@ -1,1 +1,1 @@
-export { EditorView } from './EditorView';
+export { default as EditorApp } from './EditorApp';

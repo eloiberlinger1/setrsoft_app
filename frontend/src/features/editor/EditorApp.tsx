@@ -25,9 +25,9 @@ interface HoldInstance {
 }
 
 const transformTools = [
-  { id: "translate", icon: "open_with", label: "Translate" },
-  { id: "rotate", icon: "sync", label: "Rotate" },
-  { id: "scale", icon: "aspect_ratio", label: "Scale" },
+  { id: "translate", icon: "open_with", label: "Translate", hint: "Shift + Left click" },
+  { id: "rotate", icon: "sync", label: "Rotate", hint: "Left click" },
+  { id: "scale", icon: "aspect_ratio", label: "Scale", hint: "Scroll with mouse" },
 ] as const;
 
 function EditorApp() {
@@ -35,8 +35,6 @@ function EditorApp() {
   const { fetchWallSession } = useWallSessionQuery();
   const { t } = useTranslation();
   const [wallModels, setWallModels] = useState<string[]>([]);
-  const [activeTool, setActiveTool] = useState<string>("translate");
-
   const setObjects = usePlacementStore((s) => s.setObjects);
   const setWallColors = usePlacementStore((s) => s.setWallColors);
   const setHoldColors = usePlacementStore((s) => s.setHoldColors);
@@ -131,9 +129,9 @@ function EditorApp() {
 
   return (
     <div className="flex flex-col h-screen w-screen bg-surface overflow-hidden">
-      {/* Main Workspace — no top bar; FileManager + tools float top-left */}
       <main className="flex flex-1 h-screen min-h-0 overflow-hidden">
-        {/* Central Viewport */}
+
+        {/* Left tools */}
         <section className="flex-1 relative bg-surface viewport-grid overflow-hidden min-w-0">
           <div className="absolute top-4 left-4 z-50 flex max-w-[calc(100vw-2rem)] flex-col items-start gap-3">
             <div className="w-fit max-w-full rounded-xl bg-surface-low/90 p-2 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] backdrop-blur-md">
@@ -141,22 +139,20 @@ function EditorApp() {
             </div>
             <div className="flex w-fit flex-col gap-1 self-start rounded-xl bg-surface-low/90 p-1 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] backdrop-blur-md">
               {transformTools.map((tool) => (
-                <button
-                  key={tool.id}
-                  type="button"
-                  title={tool.label}
-                  onClick={() => setActiveTool(tool.id)}
-                  className={`w-10 h-10 flex shrink-0 items-center justify-center rounded-lg transition-all active:scale-95 ${
-                    activeTool === tool.id
-                      ? "bg-surface-high text-mint"
-                      : "text-on-surface-variant hover:bg-surface-high/80"
-                  }`}
-                >
-                  <span className="material-symbols-outlined">{tool.icon}</span>
-                </button>
+                <div key={tool.id} className="group relative">
+                  <div className="w-10 h-10 flex shrink-0 items-center justify-center rounded-lg text-on-surface-variant cursor-pointer">
+                    <span className="material-symbols-outlined">{tool.icon}</span>
+                  </div>
+                  <div className="absolute left-full top-1/2 ml-2 -translate-y-1/2 whitespace-nowrap rounded-lg bg-surface-high px-2.5 py-1.5 text-xs text-on-surface-variant opacity-0 shadow-[0_4px_16px_0_rgba(0,0,0,0.4)] transition-opacity group-hover:opacity-100">
+                    <span className="font-medium text-on-surface">{tool.label}</span>
+                    <span className="mx-1.5 opacity-40">·</span>
+                    {tool.hint}
+                  </div>
+                </div>
               ))}
             </div>
           </div>
+          
           <MainCanvas wallModels={wallModels} />
           <HoldInspector />
           <Tutorial />
