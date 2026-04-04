@@ -6,11 +6,12 @@
   </picture>
   <br/>
   <br/>
+  <a href="https://github.com/setrsoft/setrsoft_app/actions/workflows/ci.yml"><img alt="CI Status" src="https://github.com/setrsoft/setrsoft_app/actions/workflows/ci.yml/badge.svg?branch=main"></a>
+  <a href="https://discord.gg/BdyfNU9TpR"><img alt="Discord" src="https://img.shields.io/badge/Discord-Join-7289da?logo=discord&logoColor=white"></a>
+  <a href="https://github.com/setrsoft/setrsoft-app/releases"><img alt="GitHub release" src="https://img.shields.io/github/release/setrsoft/"></a>
 </p>
 
-[![CI Status](https://github.com/setrsoft/setrsoft_app/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/setrsoft/setrsoft_app/actions/workflows/ci.yml)
-[![Discord](https://img.shields.io/badge/Discord-Join-7289da?logo=discord&logoColor=white)](https://discord.gg/BdyfNU9TpR)
-<a href="https://github.com/huggingface/huggingface_hub/releases"><img alt="GitHub release" src="https://img.shields.io/github/release/setrsoft/"></a>
+
 
 ## Welcome
 
