@@ -12,10 +12,11 @@
 [![Discord](https://img.shields.io/badge/Discord-Join-7289da?logo=discord&logoColor=white)](https://discord.gg/BdyfNU9TpR)
 <a href="https://github.com/huggingface/huggingface_hub/releases"><img alt="GitHub release" src="https://img.shields.io/github/release/setrsoft/"></a>
 
-## Welcome to the SetRsoft project
+## Welcome
 
-All the project is OpenSource, test it live on the website http://www.setrsoft.com/ 
-This project is comunity driven, please feel free to create new Github Issues for new features or signal bugs. 
+SetRsoft is a OpenSource comunity driven software. Test it live on the website http://www.setrsoft.com/ 
+
+Feel free to create new Github Issues for new features or signal bugs. 
 
 
 ## Installation instructions

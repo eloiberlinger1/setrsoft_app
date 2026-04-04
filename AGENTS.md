@@ -2,9 +2,11 @@
 
 This document provides foundational rules and context for any AI agent interacting with the SetRsoft repository.
 
+Look in .ai/ for more informations for specific implementations.
+
 ## Global Rules
 1. **Language:** All code, comments, documentation, and commit messages MUST be written in English. Wait for explicit user override to write in another language.
-2. **Context First:** Always review `.context/architecture.md` before making architectural decisions or proposing new libraries.
+2. **Context First:** Always review `.ai/architecture.md` before making architectural decisions or proposing new libraries.
 3. **No Destructive Operations:** Do not delete databases or wipe configuration files without explicit user approval. 
 
 ## Frontend Development Guidelines
