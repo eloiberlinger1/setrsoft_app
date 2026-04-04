@@ -65,7 +65,8 @@ const Sidebar = ({
 
         <div className="flex gap-2 mt-4">
           <button
-            className="gradient-mint text-surface font-bold text-sm px-3 py-2 rounded active:scale-95 transition-all w-full"
+            type="button"
+            className="w-full cursor-pointer rounded-sm bg-gradient-to-br from-mint-dim to-mint text-surface-lowest font-bold text-sm px-3 py-2 shadow-lg shadow-mint/25 transition-all hover:opacity-90 active:scale-95"
             onClick={() => setAddHoldModalOpen(true)}
           >
             {t("Add holds to quick access")}
