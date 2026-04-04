@@ -37,27 +37,6 @@ function Tutorial() {
           </ul>
         </div>
       )}
-
-      <div className="bg-surface-high/80 backdrop-blur-md p-1 rounded-full border border-ghost-border/10 flex items-center gap-1">
-        <button className="p-2 text-on-surface-variant hover:text-on-surface transition-colors" title="Caméra">
-          <span className="material-symbols-outlined text-xl">videocam</span>
-        </button>
-        <button className="p-2 text-on-surface-variant hover:text-on-surface transition-colors" title="Éclairage">
-          <span className="material-symbols-outlined text-xl">lightbulb</span>
-        </button>
-        <button className="p-2 text-on-surface-variant hover:text-on-surface transition-colors" title="Calques">
-          <span className="material-symbols-outlined text-xl">layers</span>
-        </button>
-        <div className="w-px h-6 bg-ghost-border/20 mx-1"></div>
-        <button
-          onClick={() => setShow((v) => !v)}
-          className={`p-2 transition-colors ${show ? "text-mint" : "text-on-surface-variant hover:text-on-surface"}`}
-          title="Aide sur les contrôles 3D"
-          aria-label="Aide sur les contrôles 3D"
-        >
-          <span className="material-symbols-outlined text-xl">help_outline</span>
-        </button>
-      </div>
     </div>
   );
 }
