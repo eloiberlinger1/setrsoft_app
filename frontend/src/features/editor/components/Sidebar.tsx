@@ -44,12 +44,12 @@ const Sidebar = ({
   };
 
   return (
-    <div className="bg-white border-r border-gray-200 h-full flex flex-col shadow-sm">
-      <div className="px-6 py-4 border-b border-gray-100">
-        <h1 className="text-lg font-semibold text-gray-900">
+    <div className="bg-surface-low h-full flex flex-col">
+      <div className="px-6 py-4 bg-surface-high">
+        <h2 className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-1">
           {t("SetRsoft Creator Studio")}
-        </h1>
-        <p className="text-sm text-gray-500 mt-1">
+        </h2>
+        <p className="text-xs text-on-surface-variant mt-1">
           {t("Click on a hold and drag it to the left")}
         </p>
 
@@ -65,15 +65,16 @@ const Sidebar = ({
 
         <div className="flex gap-2 mt-4">
           <button
-            className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 text-sm"
+            type="button"
+            className="w-full cursor-pointer rounded-sm bg-gradient-to-br from-mint-dim to-mint text-surface-lowest font-bold text-sm px-3 py-2 shadow-lg shadow-mint/25 transition-all hover:opacity-90 active:scale-95"
             onClick={() => setAddHoldModalOpen(true)}
           >
             {t("Add holds to quick access")}
           </button>
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto">
-        <div className="px-6 py-6 space-y-8">
+      <div className="scrollbar-none min-h-0 flex-1 overflow-y-auto">
+        <div className="px-4 py-4 space-y-6">
           <SidebarHoldsSection
             holdModels={processedHoldModels}
             session_data={session_data}

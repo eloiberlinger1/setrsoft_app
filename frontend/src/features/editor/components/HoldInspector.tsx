@@ -47,8 +47,8 @@ function RotationHandle({
           cx={radius}
           cy={radius}
           r={handleRadius}
-          fill="#f8fafc"
-          stroke="#e2e8f0"
+          fill="#1c1b1b"
+          stroke="#3a4a40"
           strokeWidth={2}
         />
         <circle
@@ -56,17 +56,17 @@ function RotationHandle({
           cy={radius}
           r={handleRadius - 6}
           fill="none"
-          stroke="#cbd5e1"
+          stroke="#3a4a40"
           strokeWidth={1}
           strokeDasharray="2,2"
         />
       </svg>
       <div
-        className="absolute w-4 h-4 rounded-full bg-blue-500 border-2 border-white shadow-md cursor-grab active:cursor-grabbing hover:bg-blue-600 transition-colors"
+        className="absolute w-4 h-4 rounded-full bg-mint border-2 border-surface-low shadow-md cursor-grab active:cursor-grabbing transition-colors"
         style={{ left: handleX - 8, top: handleY - 8, touchAction: "none" }}
         onPointerDown={onPointerDown}
       />
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-700 font-medium text-xs pointer-events-none">
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-on-surface-variant font-medium text-xs pointer-events-none">
         {Math.round((rotation * 180) / Math.PI) % 360}°
       </div>
     </div>
@@ -85,22 +85,21 @@ const HoldInspector = () => {
     (o) => o.id === selectedObjId && o.type === "hold"
   );
   if (!selected) return null;
-  // Only show for parent holds (has children or no parentId)
   const children = objects.filter((o) => o.parentId === selected.id);
   if (selected.parentId) return null;
   return (
-    <div className="absolute top-6 right-6 z-50 bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden min-w-[220px] max-w-[280px]">
+    <div className="absolute top-6 right-6 z-50 bg-surface-low overflow-hidden min-w-[220px] max-w-[280px]">
       {/* Header */}
-      <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-4 py-3 border-b border-gray-200">
+      <div className="bg-surface-high px-4 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-            <h3 className="font-semibold text-gray-900 text-sm">
+            <div className="w-2 h-2 rounded-full bg-mint"></div>
+            <h3 className="text-xs font-bold text-on-surface-variant uppercase tracking-widest">
               {t("Inspecteur des retenues")}
             </h3>
           </div>
           <button
-            className="p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-200 rounded-md transition-colors"
+            className="p-1 text-on-surface-variant hover:text-on-surface hover:bg-surface-high rounded transition-colors"
             onClick={() => selectObject(null)}
             title="Close inspector"
           >
@@ -125,16 +124,16 @@ const HoldInspector = () => {
       <div className="p-4">
         {/* Parent Hold Info */}
         <div className="text-center mb-4">
-          <div className="inline-flex items-center px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium mb-2">
+          <div className="inline-flex items-center px-3 py-1 bg-surface-high text-mint text-xs font-medium mb-2">
             Parent Hold
           </div>
-          <h4 className="font-medium text-gray-900 text-sm mb-3">
+          <h4 className="font-medium text-on-surface text-sm mb-3">
             {selected.name || "Unnamed Hold"}
           </h4>
 
           {/* Rotation Control */}
           <div className="flex flex-col items-center gap-2">
-            <span className="text-xs text-gray-500 font-medium">Rotation</span>
+            <span className="text-xs text-on-surface-variant font-medium uppercase tracking-widest">Rotation</span>
             <RotationHandle
               rotation={selected.customRotation || 0}
               onRotate={(angle) =>
@@ -172,12 +171,12 @@ const HoldInspector = () => {
 
         {/* Children Section */}
         {children.length > 0 && (
-          <div className="border-t border-gray-200 pt-4">
+          <div className="border-t border-ghost-border pt-4">
             <div className="flex items-center justify-between mb-3">
-              <h5 className="font-medium text-gray-900 text-sm">
+              <h5 className="text-xs font-bold text-on-surface-variant uppercase tracking-widest">
                 {t("Child Holds")}
               </h5>
-              <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700">
+              <span className="bg-surface-high text-on-surface-variant px-2 py-0.5 text-xs font-mono">
                 {children.length}
               </span>
             </div>
@@ -186,20 +185,20 @@ const HoldInspector = () => {
               {children.map((child) => (
                 <div
                   key={child.id}
-                  className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100"
+                  className="flex items-center gap-3 p-3 bg-surface-lowest border border-ghost-border"
                 >
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 truncate">
+                    <p className="text-sm font-medium text-on-surface truncate">
                       {child.name || `Hold ${child.id.slice(0, 6)}`}
                     </p>
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-on-surface-variant mt-1">
                       {t("Child hold")}
                     </p>
                   </div>
 
                   <div className="flex items-center gap-2">
                     <div className="flex flex-col items-center">
-                      <span className="text-xs text-gray-500 mb-1">
+                      <span className="text-xs text-on-surface-variant mb-1 uppercase tracking-widest">
                         {t("Rotate")}
                       </span>
                       <RotationHandle
@@ -211,7 +210,7 @@ const HoldInspector = () => {
                     </div>
 
                     <button
-                      className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors"
+                      className="p-1.5 text-on-surface-variant hover:text-red-400 hover:bg-surface-high rounded transition-colors"
                       title="Delete child hold"
                       onClick={() => {
                         posthog.capture({ distinctId: 'demo', event: 'hold removed', properties: { hold_name: child.name, hold_id: child.id, is_child: true } });

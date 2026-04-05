@@ -21,15 +21,20 @@ interface HoldInstance {
   hold_type?: {
     glb_url?: string;
   };
-  [key: string]: unknown; 
+  [key: string]: unknown;
 }
+
+const transformTools = [
+  { id: "translate", icon: "open_with", label: "Translate", hint: "Shift + Left click" },
+  { id: "rotate", icon: "sync", label: "Rotate", hint: "Left click" },
+  { id: "scale", icon: "aspect_ratio", label: "Scale", hint: "Scroll with mouse" },
+] as const;
 
 function EditorApp() {
   const { wallId } = useParams<{ wallId: string }>();
   const { fetchWallSession } = useWallSessionQuery();
   const { t } = useTranslation();
   const [wallModels, setWallModels] = useState<string[]>([]);
-
   const setObjects = usePlacementStore((s) => s.setObjects);
   const setWallColors = usePlacementStore((s) => s.setWallColors);
   const setHoldColors = usePlacementStore((s) => s.setHoldColors);
@@ -79,12 +84,9 @@ function EditorApp() {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [hasUnsavedChanges, t]);
 
-  // Collect hold models from session data
   const holdModels: Array<Record<string, HoldInstance>> = [];
   const holdModelsGLBURL: string[] = [];
 
-  // Use glb_url from the serializer directly (HF CDN or local media URL)
-  // No fetch/blob needed — three.js loads URLs directly
   useEffect(() => {
     const glbUrl = session_data?.related_wall?.glb_url;
     setWallModels(glbUrl ? [glbUrl] : []);
@@ -117,29 +119,54 @@ function EditorApp() {
       window.removeEventListener("preloadGLB", handleGlobalPreload as EventListener);
   }, [preload]);
 
-  if (isLoading) return <div>{t("Loading wall session")}...</div>;
+  if (isLoading) return <div className="flex h-screen w-screen bg-surface items-center justify-center text-on-surface-variant">{t("Loading wall session")}...</div>;
   if (isError)
     return (
-      <div>
+      <div className="flex h-screen w-screen bg-surface items-center justify-center text-on-surface-variant">
         {t("Error loading wall session:", { error: (error as Error).message })}
       </div>
     );
 
   return (
-    <div className="flex h-screen w-screen bg-blue-50 relative">
-      <div className="w-4/5 h-full relative">
-        <MainCanvas wallModels={wallModels} />
-        <HoldInspector />
-        <FileManager session_data={session_data} />
-        <Tutorial />
-      </div>
-      <div className="w-1/5 h-full border-l border-blue-200 bg-white">
-        <Sidebar
-          wallModels={wallModels}
-          holdModels={holdModels}
-          session_data={session_data}
-        />
-      </div>
+    <div className="flex flex-col h-screen w-screen bg-surface overflow-hidden">
+      <main className="flex flex-1 h-screen min-h-0 overflow-hidden">
+
+        {/* Left tools */}
+        <section className="flex-1 relative bg-surface viewport-grid overflow-hidden min-w-0">
+          <div className="absolute top-4 left-4 z-50 flex max-w-[calc(100vw-2rem)] flex-col items-start gap-3">
+            <div className="w-fit max-w-full rounded-xl bg-surface-low/90 p-2 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] backdrop-blur-md">
+              <FileManager session_data={session_data} />
+            </div>
+            <div className="flex w-fit flex-col gap-1 self-start rounded-xl bg-surface-low/90 p-1 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] backdrop-blur-md">
+              {transformTools.map((tool) => (
+                <div key={tool.id} className="group relative">
+                  <div className="w-10 h-10 flex shrink-0 items-center justify-center rounded-lg text-on-surface-variant cursor-pointer">
+                    <span className="material-symbols-outlined">{tool.icon}</span>
+                  </div>
+                  <div className="absolute left-full top-1/2 ml-2 -translate-y-1/2 whitespace-nowrap rounded-lg bg-surface-high px-2.5 py-1.5 text-xs text-on-surface-variant opacity-0 shadow-[0_4px_16px_0_rgba(0,0,0,0.4)] transition-opacity group-hover:opacity-100">
+                    <span className="font-medium text-on-surface">{tool.label}</span>
+                    <span className="mx-1.5 opacity-40">·</span>
+                    {tool.hint}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <MainCanvas wallModels={wallModels} />
+          <HoldInspector />
+          <Tutorial />
+        </section>
+
+        {/* Right Sidebar */}
+        <aside className="w-80 bg-surface-low flex flex-col z-30 flex-shrink-0">
+          <Sidebar
+            wallModels={wallModels}
+            holdModels={holdModels}
+            session_data={session_data}
+          />
+        </aside>
+      </main>
     </div>
   );
 }

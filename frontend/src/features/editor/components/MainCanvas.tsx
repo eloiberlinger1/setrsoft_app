@@ -29,10 +29,9 @@ function DragPreview() {
     gl,
   });
 
-  // Helper: recursively render children for preview
   function renderPreviewChildren(parentId: string) {
     return objects
-      .filter((o) => o.parentId === parentId && o.url) // Only render objects with valid URLs
+      .filter((o) => o.parentId === parentId && o.url)
       .map((child) => {
         let groupQuaternion = child.rotation;
         if (typeof child.customRotation === "number") {
@@ -78,6 +77,7 @@ function DragPreview() {
         let parentId: string | null = null;
         let localPos = pos;
         let localQuat = alignedQuat;
+        
         // If dropped on a hold, set parentId and compute local transform
         if (dropTarget && dropTarget.type === "hold" && dropTarget.id) {
           parentId = dropTarget.id;
@@ -524,6 +524,7 @@ const MainCanvas = ({ wallModels }: { wallModels: string[] }) => {
   }, [wallModels, addObject, updateObject, objects]);
 
   const dragging = useDragStore((s) => s.dragging);
+
   return (
     <div className="relative w-full h-full">
       {/* Loading overlay for initial wall loading */}

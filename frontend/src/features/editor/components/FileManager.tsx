@@ -116,25 +116,25 @@ const FileManager = ({ session_data }: { session_data: any }) => {
   };
 
   return (
-    <div className="fixed top-4 left-4 flex items-center" style={{ minWidth: 180 }}>
-      <button id="back-button" className="p-2 cursor-pointer" onClick={handleSaveAndNavigate}>
-        <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-label={t("back")}>
+    <div className="flex items-center gap-1 min-w-48">
+      <button id="back-button" className="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-high transition-all active:scale-95 cursor-pointer" onClick={handleSaveAndNavigate}>
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-label={t("back")}>
           <polyline points="15 18 9 12 15 6" />
         </svg>
       </button>
-      <div id="save-button" className="p-2 cursor-pointer" onClick={handleSave}>
-        <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-label={t("save")}>
+      <button id="save-button" className="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-high transition-all active:scale-95 cursor-pointer" onClick={handleSave}>
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-label={t("save")}>
           <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
           <polyline points="17 21 17 13 7 13 7 21" />
           <polyline points="7 3 7 8 15 8" />
         </svg>
-      </div>
+      </button>
       <input
         type="text"
         value={sessionName}
         onChange={(e) => setSessionName(e.target.value)}
         onBlur={handleSessionNameChange}
-        className="border border-gray-300 bg-white rounded px-2 py-1 w-1/2"
+        className="bg-surface-high border-0 text-on-surface font-mono text-sm px-3 py-1.5 rounded focus:ring-1 focus:ring-mint focus:outline-none"
       />
     </div>
   );

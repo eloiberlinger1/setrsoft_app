@@ -2,7 +2,7 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { Root } from '@/app/Root';
 import { HomePage } from '@/features/showcase';
 import { GymDashboard } from '@/features/gym';
-import { EditorView } from '@/features/editor';
+import EditorApp from '@/features/editor/EditorApp';
 import { ROUTES } from '@/core/config';
 
 export const router = createBrowserRouter([
@@ -18,6 +18,6 @@ export const router = createBrowserRouter([
     ],
   },
   // Editor lives outside Root — it is a full-screen canvas with its own nav
-  { path: '/editor/:wallId', element: <EditorView /> },
+  { path: '/editor/:wallId', element: <EditorApp /> },
   { path: '*', element: <Navigate to={ROUTES.HOME} replace /> },
 ]);

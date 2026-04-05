@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { useGLTF } from "@react-three/drei";
 import { posthog } from "@/shared/analytics/posthog";
+import HoldInfoModal from "./HoldInfoModal";
 
 type HoldModel = {
   name: string;
@@ -38,6 +39,7 @@ const SidebarHoldsSection = forwardRef<
   const [showHolds, setShowHolds] = useState(true);
   const [showVolumes, setShowVolumes] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [infoHold, setInfoHold] = useState<HoldModel | null>(null);
 
   useEffect(() => {
     setModels((prevModels) => {
@@ -138,9 +140,11 @@ const SidebarHoldsSection = forwardRef<
   const HoldItem = ({
     hold,
     stockData,
+    onOpenInfo,
   }: {
     hold: HoldModel;
     stockData: any;
+    onOpenInfo: (hold: HoldModel) => void;
   }) => {
     if (!hold || !hold.hold_type) return null;
 
@@ -154,10 +158,10 @@ const SidebarHoldsSection = forwardRef<
     return (
       <div
         key={hold.hold_instance_id}
-        className="flex flex-col gap-1 items-center"
+        className="flex flex-col gap-1 items-center "
       >
         <div
-          className="group relative flex flex-col items-center justify-center pb-2 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md hover:border-gray-300 transition-all cursor-grab active:cursor-grabbing select-none w-full"
+          className="group relative flex flex-col items-center justify-center pb-2 bg-surface-lowest hover:bg-surface-high transition-colors cursor-grab active:cursor-grabbing select-none w-full"
           onMouseDown={handleDragStart(hold)}
           onTouchStart={handleDragStart(hold)}
         >
@@ -170,14 +174,15 @@ const SidebarHoldsSection = forwardRef<
             />
           </div>
           <span
-            className={`absolute top-2 right-2 text-md ${
-              used < 0 ? "text-red-500" : "text-gray-900"
+            className={`absolute top-2 right-2 text-xs font-mono ${
+              used < 0 ? "text-red-400" : "text-on-surface-variant"
             }`}
           >
             {used}/{available}
           </span>
           <button
-            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 p-1 text-gray-400 hover:text-red-500 bg-white rounded-full shadow-sm transition-all"
+            type="button"
+            className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 p-1 text-on-surface-variant hover:text-red-400 bg-surface-high rounded transition-all"
             title="Delete hold"
             onClick={(e) => {
               e.stopPropagation();
@@ -193,15 +198,40 @@ const SidebarHoldsSection = forwardRef<
               />
             </svg>
           </button>
+          <button
+            type="button"
+            className="absolute top-2 left-8 opacity-0 group-hover:opacity-100 p-1 text-on-surface-variant hover:text-mint bg-surface-high rounded transition-all"
+            title={t("editor.hold_info_title")}
+            aria-label={t("editor.hold_info_title")}
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpenInfo(hold);
+            }}
+          >
+            <svg
+              className="w-3.5 h-3.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden={true}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </button>
         </div>
         <div className="flex items-center pb-1 gap-2 mt-1">
           {userColors.map((color: string) => (
             <button
               key={color}
               onClick={() => setHoldColor(hold.file, color)}
-              className={`w-4 h-4 border border-gray-300 shadow-sm cursor-pointer ${
+              className={`w-4 h-4 border border-ghost-border cursor-pointer ${
                 holdColors[hold.file] === color
-                  ? "ring-2 ring-offset-1 ring-blue-500"
+                  ? "ring-2 ring-offset-1 ring-mint ring-offset-surface-low"
                   : ""
               }`}
               style={{ backgroundColor: color }}
@@ -217,30 +247,35 @@ const SidebarHoldsSection = forwardRef<
     <HoldScrollContext.Provider value={scrollRef}>
     <section ref={scrollRef as React.RefObject<HTMLElement>}>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-base font-medium text-gray-900">
+        <h2 className="text-xs font-bold text-on-surface-variant uppercase tracking-widest">
           {t("Quick Access")}
         </h2>
-        <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700">
+        <span className="bg-surface-high text-on-surface-variant px-2 py-0.5 text-xs font-mono">
           {uniqueModels.length}
         </span>
       </div>
 
       <div className="mb-6">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-medium text-gray-800">
+          <h3 className="text-xs font-bold text-on-surface-variant uppercase tracking-widest">
             {t("Holds (Hand/Foot)")}
           </h3>
           <button
             onClick={() => setShowHolds(!showHolds)}
-            className="cursor-pointer text-xs text-gray-500 hover:text-gray-700 transition-colors"
+            className="cursor-pointer text-xs text-on-surface-variant hover:text-on-surface transition-colors"
           >
             {showHolds ? t("Hide") : t("Show")} ({holds.length})
           </button>
         </div>
         {showHolds && (
-          <div className="overflow-x-hidden grid grid-cols-2 gap-3 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+          <div className="overflow-x-hidden grid grid-cols-2 gap-2">
             {holds.map((hold) => (
-              <HoldItem key={hold.hold_instance_id} hold={hold} stockData={stockData} />
+              <HoldItem
+                key={hold.hold_instance_id}
+                hold={hold}
+                stockData={stockData}
+                onOpenInfo={setInfoHold}
+              />
             ))}
           </div>
         )}
@@ -248,22 +283,33 @@ const SidebarHoldsSection = forwardRef<
 
       <div className="mb-6">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-medium text-gray-800">{t("Volumes")}</h3>
+          <h3 className="text-xs font-bold text-on-surface-variant uppercase tracking-widest">{t("Volumes")}</h3>
           <button
             onClick={() => setShowVolumes(!showVolumes)}
-            className="cursor-pointer text-xs text-gray-500 hover:text-gray-700 transition-colors"
+            className="cursor-pointer text-xs text-on-surface-variant hover:text-on-surface transition-colors"
           >
             {showVolumes ? t("Hide") : t("Show")} ({volumes.length})
           </button>
         </div>
         {showVolumes && (
-          <div className="overflow-x-hidden grid grid-cols-2 gap-3 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+          <div className="overflow-x-hidden grid grid-cols-2 gap-2">
             {volumes.map((hold) => (
-              <HoldItem key={hold.hold_instance_id} hold={hold} stockData={stockData} />
+              <HoldItem
+                key={hold.hold_instance_id}
+                hold={hold}
+                stockData={stockData}
+                onOpenInfo={setInfoHold}
+              />
             ))}
           </div>
         )}
       </div>
+      <HoldInfoModal
+        isOpen={infoHold !== null}
+        hold={infoHold}
+        stockData={stockData}
+        onClose={() => setInfoHold(null)}
+      />
     </section>
     </HoldScrollContext.Provider>
   );
