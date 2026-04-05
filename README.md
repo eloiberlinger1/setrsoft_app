@@ -8,7 +8,7 @@
   <br/>
   <a href="https://github.com/setrsoft/setrsoft_app/actions/workflows/ci.yml"><img alt="CI Status" src="https://github.com/setrsoft/setrsoft_app/actions/workflows/ci.yml/badge.svg?branch=main"></a>
   <a href="https://discord.gg/BdyfNU9TpR"><img alt="Discord" src="https://img.shields.io/badge/Discord-Join-7289da?logo=discord&logoColor=white"></a>
-  <a href="https://github.com/setrsoft/setrsoft-app/releases"><img alt="GitHub release" src="https://img.shields.io/github/release/setrsoft/"></a>
+  <a href="https://github.com/setrsoft/setrsoft_app/releases"><img alt="GitHub release" src="https://img.shields.io/github/release/setrsoft/setrsoft_app"></a>
 </p>
 
 
