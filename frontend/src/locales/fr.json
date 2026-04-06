@@ -9,8 +9,8 @@
     "hero": {
       "subtitle": "Nous mettons la technologie au service de l'escalade",
       "test_editor": "Tester l'éditeur",
-      "holds_database": "Base de données publique de prises d'escalade",
-      "stock_management": "Gestion de stock pour l'ouverture"
+      "holds_database": "Base de données de prises",
+      "stock_management": "Gestion de stocks"
     },
     "split": {
       "dev_title": "Rejoignez le projet et contribuez",
