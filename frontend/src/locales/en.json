@@ -48,6 +48,14 @@
       "inspector_title": "Hold Inspector",
       "delete_hold": "Delete hold"
     },
+    "partners": {
+      "title": "Partners",
+      "body": "We are looking for partners to empower this project and develop the future of climbing. Contact us at <emailLink>contact@setrsoft.com</emailLink> if you are interested."
+    },
+    "contact": {
+      "title": "Contact",
+      "body": "Reach us at <emailLink>contact@setrsoft.com</emailLink>"
+    },
     "footer": {
       "org": "SetRsoft organisation",
       "sentence": "The Open Source software for indoor climbing industry.",

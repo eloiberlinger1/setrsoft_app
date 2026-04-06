@@ -48,6 +48,14 @@
       "inspector_title": "Inspecteur de prises",
       "delete_hold": "Supprimer la prise"
     },
+    "partners": {
+      "title": "Partenaires",
+      "body": "Nous cherchons des partenaires pour soutenir ce projet et développer l'avenir de l'escalade. Contactez-nous à <emailLink>contact@setrsoft.com</emailLink> si vous êtes intéressé."
+    },
+    "contact": {
+      "title": "Contact",
+      "body": "Contactez-nous à <emailLink>contact@setrsoft.com</emailLink>"
+    },
     "footer": {
       "org": "Organisation SetRsoft",
       "sentence": "Le logiciel open source pour l'escalade indoor.",

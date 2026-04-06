@@ -1,4 +1,6 @@
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '@/core/config';
 
 export function Footer() {
   const { t } = useTranslation();
@@ -8,24 +10,17 @@ export function Footer() {
       <div className="mx-auto max-w-4xl px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
+            <h4 className="text-white font-medium mb-4">{t('footer.about')}</h4>
+            <ul className="space-y-2 text-sm text-on-surface-variant">
+              <li><Link to={ROUTES.PARTNERS} className="hover:text-mint transition-colors">{t('footer.partners')}</Link></li>
+              <li><a href="mailto:contact@setrsoft.com" className="hover:text-mint transition-colors">{t('footer.contact')}</a></li>
+            </ul>
+          </div>
+          <div>
             <h3 className="text-white font-bold tracking-tight mb-4">{t('footer.org')}</h3>
             <p className="text-sm text-on-surface-variant">
               {t('footer.sentence')}
             </p>
-          </div>
-          <div>
-            <h4 className="text-white font-medium mb-4">{t('footer.docs')}</h4>
-            <ul className="space-y-2 text-sm text-on-surface-variant">
-              <li><a href="#" className="hover:text-mint transition-colors">API Reference</a></li>
-              <li><a href="#" className="hover:text-mint transition-colors">Developer Guide</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-white font-medium mb-4">{t('footer.about')}</h4>
-            <ul className="space-y-2 text-sm text-on-surface-variant">
-              <li><a href="#" className="hover:text-mint transition-colors">{t('footer.partners')}</a></li>
-              <li><a href="#" className="hover:text-mint transition-colors">{t('footer.contact')}</a></li>
-            </ul>
           </div>
         </div>
         <div className="border-t border-ghost-border/30 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-on-surface-variant">

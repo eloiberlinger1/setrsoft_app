@@ -48,6 +48,14 @@
       "inspector_title": "Инспектор зацепок",
       "delete_hold": "Удалить зацепку"
     },
+    "partners": {
+      "title": "Партнёры",
+      "body": "Мы ищем партнёров для развития этого проекта и будущего скалолазания. Напишите нам на <emailLink>contact@setrsoft.com</emailLink>, если вас это интересует."
+    },
+    "contact": {
+      "title": "Контакты",
+      "body": "Свяжитесь с нами по адресу <emailLink>contact@setrsoft.com</emailLink>"
+    },
     "footer": {
       "org": "Организация SetRsoft",
       "sentence": "Программное обеспечение с открытым исходным кодом для скалодромов.",

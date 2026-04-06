@@ -8,4 +8,6 @@ export const ROUTES = {
   GYM: '/gym',
   EDITOR: '/editor',
   EDITOR_SESSION: '/editor/:wallId',
+  PARTNERS: '/partners',
+  CONTACT: '/contact',
 } as const;

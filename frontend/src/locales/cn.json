@@ -46,6 +46,14 @@
       "hold_info_hold_id": "支点 ID",
       "hold_info_hold_type_id": "支点类型 ID"
     },
+    "partners": {
+      "title": "合作伙伴",
+      "body": "我们正在寻找合作伙伴，共同推动这个项目，开创攀岩的未来。如果您有兴趣，请联系我们：<emailLink>contact@setrsoft.com</emailLink>"
+    },
+    "contact": {
+      "title": "联系方式",
+      "body": "请发送邮件至 <emailLink>contact@setrsoft.com</emailLink>"
+    },
     "footer": {
       "org": "SetRsoft 组织",
       "docs": "文档",

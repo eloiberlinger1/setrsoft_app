@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { Root } from '@/app/Root';
-import { HomePage } from '@/features/showcase';
+import { HomePage, PartnersPage, ContactPage } from '@/features/showcase';
 import { GymDashboard } from '@/features/gym';
 import EditorApp from '@/features/editor/EditorApp';
 import { ROUTES } from '@/core/config';
@@ -12,6 +12,8 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: ROUTES.GYM, element: <GymDashboard /> },
+      { path: ROUTES.PARTNERS, element: <PartnersPage /> },
+      { path: ROUTES.CONTACT, element: <ContactPage /> },
       // /editor and /editor/demo both redirect to the demo session (wall id=1)
       { path: ROUTES.EDITOR, element: <Navigate to="/editor/1" replace /> },
       { path: `${ROUTES.EDITOR}/demo`, element: <Navigate to="/editor/1" replace /> },

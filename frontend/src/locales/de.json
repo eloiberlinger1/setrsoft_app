@@ -48,6 +48,14 @@
       "inspector_title": "Griff-Inspektor",
       "delete_hold": "Griff löschen"
     },
+    "partners": {
+      "title": "Partner",
+      "body": "Wir suchen Partner, um dieses Projekt voranzutreiben und die Zukunft des Kletterns zu gestalten. Kontaktiere uns unter <emailLink>contact@setrsoft.com</emailLink>, wenn du interessiert bist."
+    },
+    "contact": {
+      "title": "Kontakt",
+      "body": "Schreib uns an <emailLink>contact@setrsoft.com</emailLink>"
+    },
     "footer": {
       "org": "SetRsoft Organisation",
       "sentence": "Die Open-Source-Software für Indoor-Klettern.",
