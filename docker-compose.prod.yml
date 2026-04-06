@@ -68,4 +68,4 @@ networks:
     driver: bridge
   public_gateway:
     external: true
-    name: ${EXTERNAL_NETWORK_NAME:-proxy-tier}
+    name: ${DOCKER_NETWORK_NAME:-proxy-tier}
