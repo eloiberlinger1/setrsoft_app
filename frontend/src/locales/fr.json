@@ -9,8 +9,8 @@
     "hero": {
       "subtitle": "Nous mettons la technologie au service de l'escalade",
       "test_editor": "Tester l'éditeur",
-      "holds_database": "Base de données publique de prises d'escalade",
-      "stock_management": "Gestion de stock pour l'ouverture"
+      "holds_database": "Base de données de prises",
+      "stock_management": "Gestion de stocks"
     },
     "split": {
       "dev_title": "Rejoignez le projet et contribuez",
@@ -44,10 +44,13 @@
       "hold_info_color": "Couleur (stock)",
       "hold_info_instance_id": "ID d'instance",
       "hold_info_hold_id": "ID prise",
-      "hold_info_hold_type_id": "ID type de prise"
+      "hold_info_hold_type_id": "ID type de prise",
+      "inspector_title": "Inspecteur de prises",
+      "delete_hold": "Supprimer la prise"
     },
     "footer": {
       "org": "Organisation SetRsoft",
+      "sentence": "Le logiciel open source pour l'escalade indoor.",
       "docs": "Documentation",
       "about": "Nous",
       "partners": "Partenaires",

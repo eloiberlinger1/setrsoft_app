@@ -58,12 +58,14 @@ export function HomePage() {
           </Link>
           
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
-            <Link 
-              to="https://setrsoft.github.io/holds-dataset-hub/" 
+            <a
+              href="https://setrsoft.github.io/holds-dataset-hub/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-surface-high text-white font-medium px-6 py-2.5 rounded-sm hover:bg-surface-lowest transition-colors border border-transparent hover:border-ghost-border/50 text-sm"
             >
               {t('hero.holds_database')}
-            </Link>
+            </a>
             <Link 
               to="#" 
               className="bg-surface-high text-white font-medium px-6 py-2.5 rounded-sm hover:bg-surface-lowest transition-colors border border-transparent hover:border-ghost-border/50 text-sm"

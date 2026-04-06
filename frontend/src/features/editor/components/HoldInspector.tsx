@@ -95,7 +95,7 @@ const HoldInspector = () => {
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-mint"></div>
             <h3 className="text-xs font-bold text-on-surface-variant uppercase tracking-widest">
-              {t("Inspecteur des retenues")}
+              {t('editor.inspector_title')}
             </h3>
           </div>
           <button
@@ -148,7 +148,7 @@ const HoldInspector = () => {
           <button
             className="flex-1 inline-flex items-center justify-center px-3 py-2 text-sm font-medium text-red-700 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 transition-colors"
             onClick={() => {
-              posthog.capture({ distinctId: 'demo', event: 'hold removed', properties: { hold_name: selected.name, hold_id: selected.id } });
+              posthog.capture('hold removed', { hold_name: selected.name, hold_id: selected.id });
               removeObject(selected.id);
             }}
           >
@@ -165,7 +165,7 @@ const HoldInspector = () => {
                 d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
               />
             </svg>
-            {t("Supprimer le parent")}
+            {t("editor.delete_hold")}
           </button>
         </div>
 
@@ -213,7 +213,7 @@ const HoldInspector = () => {
                       className="p-1.5 text-on-surface-variant hover:text-red-400 hover:bg-surface-high rounded transition-colors"
                       title="Delete child hold"
                       onClick={() => {
-                        posthog.capture({ distinctId: 'demo', event: 'hold removed', properties: { hold_name: child.name, hold_id: child.id, is_child: true } });
+                        posthog.capture('hold removed', { hold_name: child.name, hold_id: child.id, is_child: true });
                         removeObject(child.id);
                       }}
                     >
