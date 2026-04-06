@@ -31,10 +31,10 @@ export function Footer() {
         <div className="border-t border-ghost-border/30 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-on-surface-variant">
           <p>{t('footer.rights')}</p>
           <div className="flex gap-4 mt-4 md:mt-0">
-            <a href="https://www.linkedin.com/company/108033147/" className="hover:text-mint transition-colors font-medium">LinkedIn</a>
-            <a href="https://www.facebook.com/people/SetRsoft/61580060746781/" className="hover:text-mint transition-colors font-medium">Facebook</a>
-            <a href="https://www.instagram.com/setrsoft/" className="hover:text-mint transition-colors font-medium">Instagram</a>
-            <a href="https://github.com/setrsoft/" className="hover:text-mint transition-colors font-medium">GitHub</a>
+            <a href="https://www.linkedin.com/company/108033147/" target="_blank" rel="noopener noreferrer" className="hover:text-mint transition-colors font-medium">LinkedIn</a>
+            <a href="https://www.facebook.com/people/SetRsoft/61580060746781/" target="_blank" rel="noopener noreferrer" className="hover:text-mint transition-colors font-medium">Facebook</a>
+            <a href="https://www.instagram.com/setrsoft/" target="_blank" rel="noopener noreferrer" className="hover:text-mint transition-colors font-medium">Instagram</a>
+            <a href="https://github.com/setrsoft/" target="_blank" rel="noopener noreferrer" className="hover:text-mint transition-colors font-medium">GitHub</a>
           </div>
         </div>
       </div>
