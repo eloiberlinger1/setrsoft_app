@@ -1,20 +1,11 @@
-# Production stack: Nginx (web) serves the Vite build and proxies /api/ and /admin/ to Gunicorn.
-# Backend is not published on the host; only port 80 (web) is exposed.
-#
-# Usage: cp .env.example .env, set POSTGRES_PASSWORD and SECRET_KEY, then:
-#   docker compose -f docker-compose.prod.yml up -d --build
-#
-# Smoke checks (with stack up): curl -sSf http://localhost/
-#   curl -sSf http://localhost/api/health/   curl -sSf http://localhost/editor/ | head
 services:
   db:
     image: postgres:16-alpine
-    env_file:
-      - .env
+    env_file: .env
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-setrsoft}
       POSTGRES_USER: ${POSTGRES_USER:-setrsoft}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env or the environment}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
     volumes:
       - postgres_data_prod:/var/lib/postgresql/data
     healthcheck:
@@ -23,7 +14,7 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - setrsoft_network
+      - internal_bridge
 
   backend:
     build:
@@ -31,24 +22,23 @@ services:
       dockerfile: Dockerfile
     expose:
       - "${PORT_BACKEND:-8000}"
-    env_file:
-      - .env
+    env_file: .env
     environment:
       POSTGRES_HOST: db
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}
       POSTGRES_DB: ${POSTGRES_DB:-setrsoft}
       POSTGRES_USER: ${POSTGRES_USER:-setrsoft}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env or the environment}
-      SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY in .env or the environment}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+      SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY}
       DEBUG: ${DEBUG:-False}
-      ALLOWED_HOSTS: ${ALLOWED_HOSTS:?Set ALLOWED_HOSTS in .env}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:?Set ALLOWED_HOSTS}
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://${SERVER_IP}}
       TRUST_PROXY: ${TRUST_PROXY:-1}
     depends_on:
       db:
         condition: service_healthy
     networks:
-      - setrsoft_network
+      - internal_bridge
 
   web:
     build:
@@ -59,18 +49,23 @@ services:
         - VITE_PUBLIC_POSTHOG_PROJECT_TOKEN=${VITE_PUBLIC_POSTHOG_PROJECT_TOKEN:-}
         - VITE_PUBLIC_POSTHOG_HOST=${VITE_PUBLIC_POSTHOG_HOST:-}
     container_name: setrsoft-frontend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.setrsoft-app.rule=Host(`${SERVER_IP}`)"
+      - "traefik.http.routers.setrsoft-app.entrypoints=web"
+      - "traefik.http.services.setrsoft-app.loadbalancer.server.port=80"
     depends_on:
       - backend
     networks:
-      - setrsoft_network
-      - proxy-tier
+      - internal_bridge
+      - public_gateway
 
 volumes:
   postgres_data_prod:
 
 networks:
-  setrsoft_network:
+  internal_bridge:
     driver: bridge
-  proxy-tier:
+  public_gateway:
     external: true
-    name: ${DOCKER_NETWORK_NAME:-proxy-tier}
+    name: ${EXTERNAL_NETWORK_NAME:-proxy-tier}
