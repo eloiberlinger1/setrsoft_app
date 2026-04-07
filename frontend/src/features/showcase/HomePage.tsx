@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '@/core/config';
 import { posthog } from '@/shared/analytics/posthog';
+import demoVideo from '@/assets/demo-CISe8V-c.mp4';
 
 export function HomePage() {
   const { t } = useTranslation();
@@ -73,6 +74,29 @@ export function HomePage() {
               {t('hero.stock_management')}
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Demo Video Section */}
+      <section className="flex flex-col items-center gap-6">
+        <div className="text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+            {t('demo.title')}
+          </h2>
+          <p className="text-on-surface-variant text-sm md:text-base">
+            {t('demo.subtitle')}
+          </p>
+        </div>
+        <div className="w-full max-w-4xl rounded-md overflow-hidden border border-ghost-border/30 bg-surface-low shadow-xl">
+          <video
+            src={demoVideo}
+            autoPlay
+            muted
+            loop
+            playsInline
+            controls
+            className="w-full block"
+          />
         </div>
       </section>
 

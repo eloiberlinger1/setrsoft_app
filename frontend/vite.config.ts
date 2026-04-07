@@ -14,6 +14,7 @@ export default defineConfig({
       '@/shared': path.resolve(__dirname, 'src/shared'),
       '@/features': path.resolve(__dirname, 'src/features'),
       '@/app': path.resolve(__dirname, 'src/app'),
+      '@/assets': path.resolve(__dirname, 'src/assets'),
     },
     conditions: ['edge', 'browser', 'module', 'import', 'default'],
   },

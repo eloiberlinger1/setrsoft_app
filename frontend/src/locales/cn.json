@@ -12,6 +12,10 @@
       "holds_database": "全球攀岩支点数据库",
       "stock_management": "定线库存管理"
     },
+    "demo": {
+      "title": "实际演示",
+      "subtitle": "快速了解三维定线编辑器"
+    },
     "split": {
       "dev_title": "加入项目并做出贡献",
       "dev_desc": "室内攀岩技术的开源生态系统.",

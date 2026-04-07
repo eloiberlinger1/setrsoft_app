@@ -12,6 +12,10 @@
       "holds_database": "Holds Database",
       "stock_management": "Holds Stock Manager"
     },
+    "demo": {
+      "title": "See it in action",
+      "subtitle": "A quick look at the 3D route-setting editor"
+    },
     "split": {
       "dev_title": "Join the project and contribute",
       "dev_desc": "Open source software for indoor climbing industry.",

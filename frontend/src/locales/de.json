@@ -12,6 +12,10 @@
       "holds_database": "Klettergriff-Datenbank",
       "stock_management": "Bestandsverwaltung für den Routenbau"
     },
+    "demo": {
+      "title": "In Aktion erleben",
+      "subtitle": "Ein kurzer Blick auf den 3D-Routenbau-Editor"
+    },
     "split": {
       "dev_title": "Schließ dich dem Projekt an und trage bei",
       "dev_desc": "Open-Source-Ökosystem für Indoor-Klettertechnologie.",
