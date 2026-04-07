@@ -52,7 +52,7 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK_NAME:-}"
+      - "traefik.docker.network=${DOCKER_NETWORK_NAME:-default}"
       # HTTP → redirect HTTPS
       - "traefik.http.routers.setrsoft-http.rule=Host(`setrsoft.com`) || Host(`www.setrsoft.com`)"
       - "traefik.http.routers.setrsoft-http.entrypoints=http"
@@ -79,4 +79,4 @@ networks:
     driver: bridge
   public_gateway:
     external: true
-    name: ${DOCKER_NETWORK_NAME}
+    name: ${DOCKER_NETWORK_NAME:-default}
