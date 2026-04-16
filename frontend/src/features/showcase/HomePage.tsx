@@ -76,7 +76,7 @@ export function HomePage() {
           
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <a
-              href="https://setrsoft.github.io/holds-dataset-hub/"
+              href="https://dataset.setrsoft.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-surface-high text-white font-medium px-6 py-2.5 rounded-sm hover:bg-surface-lowest transition-colors border border-transparent hover:border-ghost-border/50 text-sm"
